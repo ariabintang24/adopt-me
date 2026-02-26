@@ -12,8 +12,13 @@ class UserInfolist
         return $schema->components([
             TextEntry::make('name'),
             TextEntry::make('email'),
-            TextEntry::make('phone'),
-            TextEntry::make('address'),
+            TextEntry::make('phone')
+                ->placeholder('— No phone —'),
+
+            TextEntry::make('address')
+                ->placeholder('— No address —'),
+            TextEntry::make('avatar')
+                ->placeholder('— No avatar —'),
             TextEntry::make('created_at')->dateTime(),
         ]);
     }

@@ -13,11 +13,18 @@ class AdoptionInfolist
             TextEntry::make('user.name')->label('User'),
             TextEntry::make('animal.name')->label('Animal'),
             TextEntry::make('reason'),
-            TextEntry::make('has_experience'),
+            TextEntry::make('has_experience')
+                ->formatStateUsing(fn($state) => $state ? 'Yes' : 'No'),
+            // true → Yes
+            // false → No
             TextEntry::make('residence_type'),
-            TextEntry::make('other_pets'),
+            TextEntry::make('other_pets')
+                ->formatStateUsing(fn($state) => $state ? 'Yes' : 'No'),
+            // true → Yes
+            // false → No
             TextEntry::make('status'),
-            TextEntry::make('admin_note'),
+            TextEntry::make('admin_note')
+                ->placeholder('No admin note'),
             TextEntry::make('created_at')->dateTime(),
         ]);
     }
