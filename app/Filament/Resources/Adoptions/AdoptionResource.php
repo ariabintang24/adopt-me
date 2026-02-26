@@ -9,7 +9,7 @@ use App\Filament\Resources\Adoptions\Pages\ViewAdoption;
 use App\Filament\Resources\Adoptions\Schemas\AdoptionForm;
 use App\Filament\Resources\Adoptions\Schemas\AdoptionInfolist;
 use App\Filament\Resources\Adoptions\Tables\AdoptionsTable;
-use App\Models\Adoption;
+use App\Models\AdoptRequest;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AdoptionResource extends Resource
 {
-    protected static ?string $model = Adoption::class;
+    protected static ?string $model = AdoptRequest::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

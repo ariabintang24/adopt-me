@@ -9,6 +9,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+use Filament\Panel;
+
+
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -52,6 +55,12 @@ class User extends Authenticatable
     }
 
     protected $guard_name = 'web';
+
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->hasRole('admin');
+    }
 
     // User has many adoption requests
     public function adoptionRequests()
