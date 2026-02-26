@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Interfaces\AdoptionRepositoryInterface;
 use App\Interfaces\AnimalRepositoryInterface;
+use App\Repositories\AdoptionRepository;
 use App\Repositories\AnimalRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             AnimalRepositoryInterface::class,
             AnimalRepository::class
+        );
+        $this->app->bind(
+            AdoptionRepositoryInterface::class,
+            AdoptionRepository::class
         );
     }
 
