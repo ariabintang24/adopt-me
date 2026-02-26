@@ -10,13 +10,21 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+
 class CategoriesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+
+                ImageColumn::make('image')
+                    ->circular(),
             ])
             ->filters([
                 TrashedFilter::make(),
