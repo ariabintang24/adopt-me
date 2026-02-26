@@ -18,6 +18,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use App\Services\AnimalService;
+
 class AnimalResource extends Resource
 {
     protected static ?string $model = Animal::class;
@@ -64,5 +66,12 @@ class AnimalResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    // Protected
+
+    protected function handleRecordCreation(array $data): \Illuminate\Database\Eloquent\Model
+    {
+        return app(AnimalService::class)->createAnimal($data);
     }
 }
