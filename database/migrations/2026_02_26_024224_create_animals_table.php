@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('category_id')->constrained()
                 ->cascadeOnDelete();
+            $table->string('slug')->unique();
             $table->integer('age');
             $table->enum('gender', [
                 'male',

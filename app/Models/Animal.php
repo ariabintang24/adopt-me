@@ -14,6 +14,7 @@ class Animal extends Model
     protected $fillable = [
         'code',
         'name',
+        'slug',
         'category_id',
         'age',
         'gender',
