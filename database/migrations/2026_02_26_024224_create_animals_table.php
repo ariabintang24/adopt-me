@@ -13,7 +13,26 @@ return new class extends Migration
     {
         Schema::create('animals', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->unique();
+            $table->string('name');
+            $table->foreignId('category_id')->constrained()
+                ->cascadeOnDelete();
+            $table->integer('age');
+            $table->enum('gender', [
+                'male',
+                'female'
+            ]);
+            $table->text('description');
+            $table->enum('status', [
+                'available',
+                'adopted'
+            ])
+                ->default('available');
+            $table->foreignId('created_by')->nullable()
+                ->constrained('users')
+                ->nullOnDelete();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

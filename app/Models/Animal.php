@@ -2,9 +2,58 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\AdoptRequest;
 
 class Animal extends Model
 {
-    //
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'code',
+        'name',
+        'category_id',
+        'age',
+        'gender',
+        'description',
+        'status',
+        'created_by',
+    ];
+
+    protected $casts = [
+        'age' => 'integer',
+    ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(AnimalImage::class);
+    }
+
+    public function adoptionRequests()
+    {
+        return $this->hasMany(AdoptRequest::class);
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    // helper
+    public function isAvailable(): bool
+    {
+        return $this->status === 'available';
+    }
 }
