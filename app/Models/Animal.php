@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\AdoptRequest;
+use App\Models\AdoptionRequest;
 
 class Animal extends Model
 {
@@ -39,7 +39,7 @@ class Animal extends Model
 
     public function adoptionRequests()
     {
-        return $this->hasMany(AdoptRequest::class);
+        return $this->hasMany(AdoptionRequest::class);
     }
 
     public function favorites()

@@ -65,13 +65,13 @@ class User extends Authenticatable
     // User has many adoption requests
     public function adoptionRequests()
     {
-        return $this->hasMany(AdoptRequest::class);
+        return $this->hasMany(AdoptionRequest::class);
     }
 
     // User (admin) approved many adoption requests
     public function approvedAdoptions()
     {
-        return $this->hasMany(AdoptRequest::class, 'approved_by');
+        return $this->hasMany(AdoptionRequest::class, 'approved_by');
     }
 
     // User has many favorites

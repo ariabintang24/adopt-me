@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AdoptRequest extends Model
+class AdoptionRequest extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -23,6 +23,8 @@ class AdoptRequest extends Model
         'approved_at',
         'approved_by',
     ];
+
+    protected $table = 'adopt_requests';
 
     protected $casts = [
         'has_experience' => 'boolean',

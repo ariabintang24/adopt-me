@@ -22,6 +22,12 @@ class AdoptionInfolist
                 ->formatStateUsing(fn($state) => $state ? 'Yes' : 'No'),
             // true → Yes
             // false → No
+
+            TextEntry::make('other_pets_detail')
+                ->placeholder('— No other pets —'),
+            // TextEntry::make('other_pets_detail')
+            //     ->visible(fn($record) => $record->other_pets === true)
+            //     ->placeholder('— No detail provided —'),
             TextEntry::make('status'),
             TextEntry::make('admin_note')
                 ->placeholder('No admin note'),

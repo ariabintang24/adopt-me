@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Interfaces\AdoptionRepositoryInterface;
-use App\Models\AdoptRequest;
+use App\Models\AdoptionRequest;
 use App\Models\Animal;
 use Illuminate\Support\Facades\DB;
 
@@ -25,7 +25,7 @@ class AdoptionService
     public function createAdoption(array $data)
     {
         // Cegah double request
-        $exists = AdoptRequest::where('user_id', $data['user_id'])
+        $exists = AdoptionRequest::where('user_id', $data['user_id'])
             ->where('animal_id', $data['animal_id'])
             ->exists();
 
@@ -46,7 +46,7 @@ class AdoptionService
     {
         DB::transaction(function () use ($adoptionId, $adminId) {
 
-            $adoption = AdoptRequest::lockForUpdate()
+            $adoption = AdoptionRequest::lockForUpdate()
                 ->findOrFail($adoptionId);
 
             if ($adoption->status !== 'pending') {
@@ -73,7 +73,7 @@ class AdoptionService
             ]);
 
             // Optional: reject other pending requests
-            AdoptRequest::where('animal_id', $animal->id)
+            AdoptionRequest::where('animal_id', $animal->id)
                 ->where('status', 'pending')
                 ->where('id', '!=', $adoption->id)
                 ->update([
