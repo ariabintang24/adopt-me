@@ -40,10 +40,16 @@
                             {{ $animal->name }}
                         </h1>
 
-                        <a href="{{ auth()->check() ? url('/adoption/create/' . $animal->id) : route('login') }}"
+                        {{-- <a href="{{ auth()->check() ? url('/adoption/create/' . $animal->id) : route('login') }}"
                             class="bg-indigo-600 text-white px-6 py-2.5 rounded-xl shadow hover:bg-indigo-700 transition">
                             Adopt Me 🐾
+                        </a> --}}
+
+                        <a href="{{ route('adoption.create', $animal->id) }}"
+                            class="bg-indigo-600 text-white px-6 py-2.5 rounded-xl">
+                            Adopt Me 🐾
                         </a>
+
                     </div>
 
                     {{-- Description --}}

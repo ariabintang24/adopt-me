@@ -15,7 +15,7 @@ class AdoptionController extends Controller
             abort(404, 'Animal not available for adoption.');
         }
 
-        return view('frontend.adoption.create', compact('animal'));
+        return view('frontend.adoptions.create', compact('animal'));
     }
 
     public function store(Request $request, Animal $animal, AdoptionService $adoptionService)

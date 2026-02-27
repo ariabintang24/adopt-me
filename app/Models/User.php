@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasRole('admin');
+        return $this->hasRole('admin'); //hanya admin yang bisa masuk
     }
 
     // User has many adoption requests
