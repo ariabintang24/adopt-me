@@ -51,8 +51,9 @@ class AnimalForm
                     ->relationship()
                     ->schema([
                         FileUpload::make('image')
-                            ->image()
+                            ->disk('public')
                             ->directory('animals')
+                            ->image()
                             ->required(),
                     ])
                     ->columnSpanFull()
