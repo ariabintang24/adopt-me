@@ -16,12 +16,6 @@ class AdoptionService
         $this->adoptionRepository = $adoptionRepository;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Create Adoption Request
-    |--------------------------------------------------------------------------
-    */
-
     public function createAdoption(array $data)
     {
         // Cegah double request
@@ -35,12 +29,6 @@ class AdoptionService
 
         return $this->adoptionRepository->create($data);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Approve Adoption (Transaction Safe)
-    |--------------------------------------------------------------------------
-    */
 
     public function approve(int $adoptionId, int $adminId)
     {
@@ -83,12 +71,6 @@ class AdoptionService
         });
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Reject Adoption
-    |--------------------------------------------------------------------------
-    */
-
     public function reject(int $adoptionId, string $note = null)
     {
         $adoption = $this->adoptionRepository->findById($adoptionId);
@@ -100,6 +82,20 @@ class AdoptionService
         return $this->adoptionRepository->update($adoptionId, [
             'status' => 'rejected',
             'admin_note' => $note,
+        ]);
+    }
+
+    public function submit(int $userId, int $animalId, array $data)
+    {
+        return AdoptionRequest::create([
+            'user_id' => $userId,
+            'animal_id' => $animalId,
+            'reason' => $data['reason'],
+            'has_experience' => $data['has_experience'],
+            'residence_type' => $data['residence_type'],
+            'other_pets' => $data['other_pets'],
+            'other_pets_detail' => $data['other_pets_detail'] ?? null,
+            'status' => 'pending',
         ]);
     }
 }
