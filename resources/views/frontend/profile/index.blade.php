@@ -121,37 +121,53 @@
                         <h2 class="text-2xl font-bold mb-8">My Adoption History</h2>
 
                         @forelse($adoptions as $adoption)
-                            <div class="flex items-center justify-between p-6 border rounded-2xl mb-6">
+                            <div class="p-6 border rounded-2xl mb-6">
 
-                                <div class="flex items-center gap-5">
-                                    <img src="{{ $adoption->animal->images->first()
-                                        ? asset('storage/' . $adoption->animal->images->first()->image)
-                                        : 'https://via.placeholder.com/120' }}"
-                                        class="w-20 h-20 rounded-xl object-cover">
+                                <div class="flex items-center justify-between">
 
-                                    <div>
-                                        <p class="text-lg font-semibold">
-                                            {{ $adoption->animal->name }}
-                                        </p>
+                                    {{-- LEFT --}}
+                                    <div class="flex items-center gap-5">
+                                        <img src="{{ $adoption->animal->images->first()
+                                            ? asset('storage/' . $adoption->animal->images->first()->image)
+                                            : 'https://via.placeholder.com/120' }}"
+                                            class="w-20 h-20 rounded-xl object-cover">
 
-                                        <p class="text-sm text-gray-500">
-                                            {{ $adoption->created_at->format('d M Y') }}
-                                        </p>
+                                        <div>
+                                            <p class="text-lg font-semibold">
+                                                {{ $adoption->animal->name }}
+                                            </p>
 
-                                        <span
-                                            class="inline-block mt-2 px-3 py-1 text-xs rounded-full
-                                        @if ($adoption->status === 'approved') bg-green-100 text-green-700
-                                        @elseif($adoption->status === 'rejected') bg-red-100 text-red-700
-                                        @else bg-yellow-100 text-yellow-700 @endif">
-                                            {{ ucfirst($adoption->status) }}
-                                        </span>
+                                            <p class="text-sm text-gray-500">
+                                                {{ $adoption->created_at->format('d M Y') }}
+                                            </p>
+
+                                            <span
+                                                class="inline-block mt-2 px-3 py-1 text-xs rounded-full
+                        @if ($adoption->status === 'approved') bg-green-100 text-green-700
+                        @elseif($adoption->status === 'rejected') bg-red-100 text-red-700
+                        @else bg-yellow-100 text-yellow-700 @endif">
+                                                {{ ucfirst($adoption->status) }}
+                                            </span>
+                                        </div>
                                     </div>
+
+                                    {{-- RIGHT BUTTON --}}
+                                    <a href="{{ route('animals.show', $adoption->animal->slug) }}"
+                                        class="bg-indigo-600 text-white px-5 py-2 rounded-xl text-sm">
+                                        View Detail
+                                    </a>
+
                                 </div>
 
-                                <a href="{{ route('animals.show', $adoption->animal->slug) }}"
-                                    class="bg-indigo-600 text-white px-5 py-2 rounded-xl text-sm">
-                                    View Detail
-                                </a>
+                                {{-- 🔥 ADMIN NOTE (HANYA JIKA REJECTED) --}}
+                                @if ($adoption->status === 'rejected' && $adoption->admin_note)
+                                    <div class="mt-4 bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
+                                        <p class="text-sm text-red-700">
+                                            <span class="font-semibold">Admin Note:</span>
+                                            {{ $adoption->admin_note }}
+                                        </p>
+                                    </div>
+                                @endif
 
                             </div>
                         @empty
@@ -168,19 +184,21 @@
                         </h2>
 
                         @if ($favorites->count())
-                            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"> {{-- 🔥 lebih rapat & lebih kotak --}}
+
                                 @foreach ($favorites as $animal)
-                                    @include('frontend.components.animal-card', [
+                                    @include('frontend.components.animal-card-compact', [
                                         'animal' => $animal,
-                                        'forceFavorite' => true,
                                     ])
                                 @endforeach
+
                             </div>
                         @else
-                            <div class="p-12 text-center text-gray-500">
+                            <div class="py-16 text-center text-gray-500">
                                 No favorites yet 🐾
                             </div>
                         @endif
+
                     </div>
 
                 </div>
