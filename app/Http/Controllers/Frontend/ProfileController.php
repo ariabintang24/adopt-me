@@ -10,17 +10,21 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user = auth()->user();
 
-        $adoptions = AdoptionRequest::with('animal')
-            ->where('user_id', $user->id)
+        $adoptions = $user->adoptionRequests()
+            ->with('animal.images')
             ->latest()
             ->get();
 
         $favorites = $user->favorites()
-            ->with('animal')
-            ->latest()
-            ->get();
+            ->with([
+                'animal.category',
+                'animal.images',
+            ])
+            ->get()
+            ->pluck('animal')
+            ->filter(); // penting supaya null dibuang
 
         return view('frontend.profile.index', compact(
             'user',
@@ -28,4 +32,25 @@ class ProfileController extends Controller
             'favorites'
         ));
     }
+
+    // public function index()
+    // {
+    //     $user = Auth::user();
+
+    //     $adoptions = AdoptionRequest::with('animal')
+    //         ->where('user_id', $user->id)
+    //         ->latest()
+    //         ->get();
+
+    //     $favorites = $user->favorites()
+    //         ->with('animal')
+    //         ->latest()
+    //         ->get();
+
+    //     return view('frontend.profile.index', compact(
+    //         'user',
+    //         'adoptions',
+    //         'favorites'
+    //     ));
+    // }
 }

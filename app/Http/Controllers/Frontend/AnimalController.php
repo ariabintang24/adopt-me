@@ -12,7 +12,15 @@ class AnimalController extends Controller
     {
         $animals = Animal::query()
             ->with(['category', 'images'])
+            ->withCount([
+                'favorites as is_favorite' => function ($query) {
+                    if (auth()->check()) {
+                        $query->where('user_id', auth()->id());
+                    }
+                }
+            ])
             ->where('status', 'available')
+            
             ->latest()
             ->paginate(12)
             ->withQueryString();
