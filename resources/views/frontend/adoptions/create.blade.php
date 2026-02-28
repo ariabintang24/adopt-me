@@ -6,28 +6,29 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-                {{-- LEFT SIDE: PREVIEW --}}
+                {{-- LEFT PREVIEW --}}
                 @include('frontend.components.animal-preview', ['animal' => $animal])
 
-                {{-- RIGHT SIDE: FORM --}}
-                <div class="bg-white rounded-3xl shadow-lg p-8">
+                {{-- RIGHT FORM --}}
+                <div x-data="{ openConfirm: false }" class="bg-white rounded-3xl shadow-lg p-8">
 
                     <h1 class="text-2xl font-bold mb-6">
                         Adoption Form
                     </h1>
 
-                    <form action="{{ route('adoption.store', $animal->id) }}" method="POST" class="space-y-6">
+                    {{-- FORM --}}
+                    <form x-ref="adoptionForm" @submit.prevent="openConfirm = true"
+                        action="{{ route('adoption.store', $animal->id) }}" method="POST" class="space-y-6">
                         @csrf
 
-                        {{-- Reason --}}
                         <div>
                             <label class="block mb-2 font-medium">
                                 Why do you want to adopt this animal?
                             </label>
-                            <textarea name="reason" rows="4" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500" required></textarea>
+                            <textarea name="reason" rows="4" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500"
+                                required></textarea>
                         </div>
 
-                        {{-- Has Experience --}}
                         <div>
                             <label class="block mb-2 font-medium">
                                 Have you owned pets before?
@@ -39,16 +40,14 @@
                             </select>
                         </div>
 
-                        {{-- Residence Type --}}
                         <div>
                             <label class="block mb-2 font-medium">
                                 Residence Type
                             </label>
                             <input type="text" name="residence_type" class="w-full border rounded-xl p-3"
-                                placeholder="House / Apartment / etc" required>
+                                placeholder="House / Apartment / Etc" required>
                         </div>
 
-                        {{-- Other Pets --}}
                         <div>
                             <label class="block mb-2 font-medium">
                                 Do you have other pets?
@@ -60,26 +59,54 @@
                             </select>
                         </div>
 
-                        {{-- Other Pets Detail --}}
                         <div id="otherPetsDetail" class="hidden">
                             <label class="block mb-2 font-medium">
                                 Other Pets Detail
                             </label>
                             <input type="text" name="other_pets_detail" class="w-full border rounded-xl p-3"
-                                placeholder="Example: 1 cat, 2 rabbits">
+                                placeholder="Ex: 3 dogs, 1 cat">
                         </div>
 
                         <button type="submit"
                             class="w-full bg-indigo-600 text-white py-3 rounded-xl hover:bg-indigo-700 transition font-medium">
-                            Submit Adoption Request
+                            Submit
                         </button>
-
                     </form>
 
+
+                    {{-- CONFIRM MODAL --}}
+                    <div x-show="openConfirm" x-transition
+                        class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+
+                        <div @click.away="openConfirm = false" class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+
+                            <h2 class="text-lg font-semibold mb-2">
+                                Confirm Adoption Request
+                            </h2>
+
+                            <p class="text-sm text-gray-600 mb-6">
+                                Are you sure you want to submit this adoption request?
+                                Please make sure all information is correct.
+                            </p>
+
+                            <div class="flex justify-end gap-3">
+                                <button type="button" @click="openConfirm = false"
+                                    class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm">
+                                    Cancel
+                                </button>
+
+                                {{-- 🔥 FIX DISINI --}}
+                                <button type="button" @click="$refs.adoptionForm.submit()"
+                                    class="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 text-sm">
+                                    Yes, Submit
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
-
             </div>
-
         </div>
     </section>
 
