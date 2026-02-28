@@ -8,23 +8,35 @@
             <div class="grid lg:grid-cols-2 gap-10">
 
                 {{-- ================= PHOTO CARD ================= --}}
+                @php
+                    $images = $animal->images;
+                @endphp
+
                 <div class="bg-white rounded-3xl shadow-lg p-6">
 
-                    <div class="rounded-2xl overflow-hidden">
-                        <img id="mainImage"
-                            src="{{ $animal->images->first()
-                                ? asset('storage/' . $animal->images->first()->image)
-                                : 'https://via.placeholder.com/800x600' }}"
-                            class="w-full h-[480px] object-cover">
-                    </div>
+                    {{-- MAIN IMAGE --}}
+                    @if ($images->count())
+                        <a href="{{ asset('storage/' . $images->first()->image) }}" class="glightbox"
+                            data-gallery="animal-gallery">
 
-                    @if ($animal->images->count() > 1)
+                            <img src="{{ asset('storage/' . $images->first()->image) }}"
+                                class="w-full h-[480px] object-cover rounded-2xl cursor-zoom-in">
+                        </a>
+                    @endif
+
+                    {{-- THUMBNAILS --}}
+                    @if ($images->count() > 1)
                         <div class="grid grid-cols-4 gap-4 mt-6">
-                            @foreach ($animal->images as $image)
-                                <img src="{{ asset('storage/' . $image->image) }}"
-                                    onclick="document.getElementById('mainImage').src=this.src"
-                                    class="h-24 w-full object-cover rounded-xl cursor-pointer hover:opacity-80 transition">
+
+                            @foreach ($images as $image)
+                                <a href="{{ asset('storage/' . $image->image) }}" class="glightbox"
+                                    data-gallery="animal-gallery"> {{-- 🔥 grouping disini --}}
+
+                                    <img src="{{ asset('storage/' . $image->image) }}"
+                                        class="h-24 w-full object-cover rounded-xl cursor-pointer hover:opacity-80 transition">
+                                </a>
                             @endforeach
+
                         </div>
                     @endif
 
