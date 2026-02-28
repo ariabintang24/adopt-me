@@ -1,9 +1,8 @@
 <div x-data="{
-    isFavorite: @json(auth()->check() && $animal->is_favorite > 0),
+    isFavorite: @json(auth()->check() && auth()->user()->favorites->contains($animal->id)),
     loading: false,
     toggle() {
         if (this.loading) return;
-
         this.loading = true;
 
         fetch('{{ route('favorite.toggle', $animal->id) }}', {
@@ -15,7 +14,7 @@
             })
             .then(res => res.json())
             .then(data => {
-                this.isFavorite = data.status === 'added'
+                this.isFavorite = !this.isFavorite;
             })
             .finally(() => {
                 this.loading = false;

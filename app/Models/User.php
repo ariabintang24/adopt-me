@@ -77,7 +77,8 @@ class User extends Authenticatable
     // User has many favorites
     public function favorites()
     {
-        return $this->hasMany(Favorite::class);
+        return $this->belongsToMany(Animal::class, 'favorites')
+            ->withTimestamps();
     }
 
     // Shortcut: user favorite animals

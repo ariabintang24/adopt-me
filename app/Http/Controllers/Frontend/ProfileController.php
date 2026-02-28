@@ -18,13 +18,9 @@ class ProfileController extends Controller
             ->get();
 
         $favorites = $user->favorites()
-            ->with([
-                'animal.category',
-                'animal.images',
-            ])
-            ->get()
-            ->pluck('animal')
-            ->filter(); // penting supaya null dibuang
+            ->with(['category', 'images'])
+            ->latest()
+            ->get();
 
         return view('frontend.profile.index', compact(
             'user',
