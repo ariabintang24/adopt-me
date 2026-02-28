@@ -11,4 +11,6 @@ interface AdoptionRepositoryInterface
     public function create(array $data);
 
     public function update(int $id, array $data);
+
+    public function findActiveByUserAndAnimal(int $userId, int $animalId);
 }

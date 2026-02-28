@@ -87,15 +87,56 @@ class AdoptionService
 
     public function submit(int $userId, int $animalId, array $data)
     {
-        return AdoptionRequest::create([
+        $activeRequest = $this->adoptionRepository
+            ->findActiveByUserAndAnimal($userId, $animalId);
+
+        // 🚫 Kalau masih ada pending/approved
+        if ($activeRequest) {
+            throw new \Exception('You already have an active adoption request for this animal.');
+        }
+
+        // 🆕 Selalu create baru (history preserved)
+        return $this->adoptionRepository->create([
             'user_id' => $userId,
             'animal_id' => $animalId,
-            'reason' => $data['reason'],
-            'has_experience' => $data['has_experience'],
-            'residence_type' => $data['residence_type'],
-            'other_pets' => $data['other_pets'],
-            'other_pets_detail' => $data['other_pets_detail'] ?? null,
+            ...$data,
             'status' => 'pending',
         ]);
+
+        // $existing = AdoptionRequest::where('user_id', $userId)
+        //     ->where('animal_id', $animalId)
+        //     ->first();
+
+        // // 🚫 Jika masih pending atau approved
+        // if ($existing && in_array($existing->status, ['pending', 'approved'])) {
+        //     throw new \Exception('You already have an active adoption request for this animal.');
+        // }
+
+        // // 🔁 Jika rejected → update & kirim ulang
+        // if ($existing && $existing->status === 'rejected') {
+        //     $existing->update([
+        //         'reason' => $data['reason'],
+        //         'has_experience' => $data['has_experience'],
+        //         'residence_type' => $data['residence_type'],
+        //         'other_pets' => $data['other_pets'],
+        //         'other_pets_detail' => $data['other_pets_detail'] ?? null,
+        //         'status' => 'pending',
+        //     ]);
+
+        //     return $existing;
+        // }
+
+        // // 🆕 Jika belum pernah apply
+        // return AdoptionRequest::create([
+        //     'user_id' => $userId,
+        //     'animal_id' => $animalId,
+        //     'reason' => $data['reason'],
+        //     'has_experience' => $data['has_experience'],
+        //     'residence_type' => $data['residence_type'],
+        //     'other_pets' => $data['other_pets'],
+        //     'other_pets_detail' => $data['other_pets_detail'] ?? null,
+        //     'status' => 'pending',
+        // ]);
+
     }
 }

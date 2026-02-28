@@ -36,4 +36,12 @@ class AdoptionRepository implements AdoptionRepositoryInterface
 
         return $adoption;
     }
+
+    public function findActiveByUserAndAnimal(int $userId, int $animalId)
+    {
+        return AdoptionRequest::where('user_id', $userId)
+            ->where('animal_id', $animalId)
+            ->whereIn('status', ['pending', 'approved'])
+            ->first();
+    }
 }
