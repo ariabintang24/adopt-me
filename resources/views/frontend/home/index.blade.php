@@ -20,7 +20,7 @@
             </div>
 
             <div>
-                <img src="https://images.unsplash.com/photo-1558944351-c4c3e8d17c9a" class="rounded-2xl shadow-lg"
+                <img src="{{ asset('images/hero-adopt.png') }}" class="rounded-2xl"
                     alt="Adopt Animal">
             </div>
 
