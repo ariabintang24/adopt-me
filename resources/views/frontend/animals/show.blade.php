@@ -52,6 +52,12 @@
 
                     </div>
 
+                    @if (session('error'))
+                        <div class="bg-red-100 text-red-600 px-4 py-3 rounded-xl mb-6">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
                     {{-- Description --}}
                     <p class="text-gray-700 mb-8">
                         {{ $animal->description }}

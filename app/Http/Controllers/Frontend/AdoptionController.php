@@ -12,7 +12,9 @@ class AdoptionController extends Controller
     public function create(Animal $animal)
     {
         if ($animal->status !== 'available') {
-            abort(404, 'Animal not available for adoption.');
+            return redirect()
+                ->route('animals.show', $animal->slug)
+                ->with('error', 'This animal has already been adopted.');
         }
 
         return view('frontend.adoptions.create', compact('animal'));

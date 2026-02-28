@@ -31,7 +31,7 @@ class AnimalController extends Controller
     {
         $animal = Animal::with(['category', 'images'])
             ->where('slug', $slug)
-            ->where('status', 'available')
+            // ->where('status', 'available')
             ->firstOrFail();
 
         return view('frontend.animals.show', compact('animal'));
