@@ -2,13 +2,13 @@
 
 @section('content')
     <section class="bg-gray-50 py-10" x-data="{ tab: 'info', open: false }">
-        <div class="max-w-6xl mx-auto px-6">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
 
-            <div class="grid md:grid-cols-3 gap-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
 
                 {{-- ================= LEFT PROFILE CARD ================= --}}
                 <div class="md:col-span-1">
-                    <div class="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+                    <div class="bg-white rounded-3xl shadow-xl p-6 md:p-8 border border-gray-100">
 
                         <div class="flex flex-col items-center text-center">
 
@@ -24,28 +24,56 @@
                             </p>
 
                             {{-- MOBILE DROPDOWN --}}
-                            <div class="w-full md:hidden">
+                            <div class="w-full md:hidden mt-6">
+
                                 <button @click="open = !open"
-                                    class="w-full bg-gray-100 rounded-xl px-4 py-3 text-left flex justify-between items-center">
-                                    <span>Menu</span>
-                                    <span x-text="open ? '▲' : '▼'"></span>
+                                    class="w-full bg-indigo-600 text-white rounded-xl px-4 py-3 text-left flex justify-between items-center">
+
+                                    {{-- ACTIVE LABEL --}}
+                                    <span class="font-medium"
+                                        x-text="
+                tab === 'info' ? 'My Information' :
+                tab === 'adoption' ? 'My Adoption History' :
+                'My Favorites'
+            ">
+                                    </span>
+
+                                    {{-- CHEVRON --}}
+                                    <svg class="w-5 h-5 transition-transform duration-300" :class="open ? 'rotate-180' : ''"
+                                        fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                    </svg>
+
                                 </button>
 
-                                <div x-show="open" class="mt-3 space-y-2">
-                                    <button @click="tab='info'; open=false"
+                                {{-- DROPDOWN ITEMS --}}
+                                <div x-show="open" x-transition @click.outside="open = false" class="mt-3 space-y-2">
+
+                                    {{-- INFO --}}
+                                    <button x-show="tab !== 'info'" @click="tab='info'; open=false"
                                         class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100">
                                         My Information
                                     </button>
 
-                                    <button @click="tab='adoption'; open=false"
+                                    {{-- ADOPTION --}}
+                                    <button x-show="tab !== 'adoption'" @click="tab='adoption'; open=false"
                                         class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100">
                                         My Adoption History
                                     </button>
 
-                                    <button @click="tab='favorites'; open=false"
+                                    {{-- FAVORITES --}}
+                                    <button x-show="tab !== 'favorites'" @click="tab='favorites'; open=false"
                                         class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100">
                                         My Favorites
                                     </button>
+
+                                    <div class="pt-3 border-t mt-3">
+                                        <button @click="$dispatch('open-logout'); open=false"
+                                            class="w-full text-left px-4 py-2 rounded-lg bg-red-600 text-white">
+                                            Logout
+                                        </button>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -70,6 +98,14 @@
                                     My Favorites
                                 </button>
 
+                                {{-- LOGOUT BUTTON --}}
+                                <div class="pt-4 border-t mt-4">
+                                    <button @click="$dispatch('open-logout')"
+                                        class="w-full py-3 rounded-xl text-sm border bg-red-600 text-white transition">
+                                        Logout
+                                    </button>
+                                </div>
+
                             </div>
 
                         </div>
@@ -78,14 +114,16 @@
 
 
                 {{-- ================= RIGHT CONTENT ================= --}}
-                <div class="md:col-span-2 space-y-10">
+                <div class="md:col-span-2 space-y-6 md:space-y-10">
 
                     {{-- ================= MY INFORMATION ================= --}}
-                    <div x-show="tab==='info'" class="bg-white rounded-3xl shadow-xl p-10 border border-gray-100">
+                    <div x-show="tab==='info'" class="bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-gray-100">
 
-                        <h2 class="text-2xl font-bold mb-8">My Information</h2>
+                        <h2 class="text-xl md:text-2xl font-bold mb-6 md:mb-8">
+                            My Information
+                        </h2>
 
-                        <div class="grid md:grid-cols-2 gap-8 text-sm">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 text-sm">
 
                             <div class="space-y-6">
                                 <div>
@@ -116,17 +154,20 @@
 
 
                     {{-- ================= ADOPTION HISTORY ================= --}}
-                    <div x-show="tab==='adoption'" class="bg-white rounded-3xl shadow-xl p-10 border border-gray-100">
+                    <div x-show="tab==='adoption'"
+                        class="bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-gray-100">
 
-                        <h2 class="text-2xl font-bold mb-8">My Adoption History</h2>
+                        <h2 class="text-xl md:text-2xl font-bold mb-6 md:mb-8">
+                            My Adoption History
+                        </h2>
 
                         @forelse($adoptions as $adoption)
-                            <div class="p-6 border rounded-2xl mb-6">
+                            <div class="p-5 md:p-6 border rounded-2xl mb-6">
 
-                                <div class="flex items-center justify-between">
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
                                     {{-- LEFT --}}
-                                    <div class="flex items-center gap-5">
+                                    <div class="flex items-center gap-4 md:gap-5">
                                         <img src="{{ $adoption->animal->images->first()
                                             ? asset('storage/' . $adoption->animal->images->first()->image)
                                             : 'https://via.placeholder.com/120' }}"
@@ -143,23 +184,23 @@
 
                                             <span
                                                 class="inline-block mt-2 px-3 py-1 text-xs rounded-full
-                        @if ($adoption->status === 'approved') bg-green-100 text-green-700
-                        @elseif($adoption->status === 'rejected') bg-red-100 text-red-700
-                        @else bg-yellow-100 text-yellow-700 @endif">
+                                            @if ($adoption->status === 'approved') bg-green-100 text-green-700
+                                            @elseif($adoption->status === 'rejected') bg-red-100 text-red-700
+                                            @else bg-yellow-100 text-yellow-700 @endif">
                                                 {{ ucfirst($adoption->status) }}
                                             </span>
                                         </div>
                                     </div>
 
-                                    {{-- RIGHT BUTTON --}}
+                                    {{-- BUTTON --}}
                                     <a href="{{ route('animals.show', $adoption->animal->slug) }}"
-                                        class="bg-indigo-600 text-white px-5 py-2 rounded-xl text-sm">
+                                        class="bg-indigo-600 text-white px-5 py-2 rounded-xl text-sm 
+                                          w-full md:w-auto text-center">
                                         View Detail
                                     </a>
-
                                 </div>
 
-                                {{-- 🔥 ADMIN NOTE (HANYA JIKA REJECTED) --}}
+                                {{-- ADMIN NOTE --}}
                                 @if ($adoption->status === 'rejected' && $adoption->admin_note)
                                     <div class="mt-4 bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
                                         <p class="text-sm text-red-700">
@@ -177,14 +218,15 @@
 
 
                     {{-- ================= FAVORITES ================= --}}
-                    <div x-show="tab==='favorites'" class="bg-white rounded-3xl shadow-xl p-10 border border-gray-100">
+                    <div x-show="tab==='favorites'"
+                        class="bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-gray-100">
 
-                        <h2 class="text-2xl font-bold mb-8">
+                        <h2 class="text-xl md:text-2xl font-bold mb-6 md:mb-8">
                             My Favorites ({{ $favorites->count() }})
                         </h2>
 
                         @if ($favorites->count())
-                            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"> {{-- 🔥 lebih rapat & lebih kotak --}}
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
                                 @foreach ($favorites as $animal)
                                     @include('frontend.components.animal-card-compact', [
@@ -194,10 +236,51 @@
 
                             </div>
                         @else
-                            <div class="py-16 text-center text-gray-500">
+                            <div class="py-12 text-center text-gray-500">
                                 No favorites yet 🐾
                             </div>
                         @endif
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {{-- ================= LOGOUT MODAL ================= --}}
+        <div x-data="{ show: false }" x-on:open-logout.window="show = true" x-show="show" x-transition
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+
+            <div @click.outside="show = false" class="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-6">
+
+                <div class="text-center">
+
+                    <div class="mb-4 text-red-500">
+                        <i class="fa-solid fa-right-from-bracket text-4xl"></i>
+                    </div>
+
+                    <h3 class="text-lg font-semibold mb-2">
+                        Konfirmasi Logout
+                    </h3>
+
+                    <p class="text-sm text-gray-500 mb-6">
+                        Apakah kamu yakin ingin keluar dari akun ini?
+                    </p>
+
+                    <div class="flex gap-3">
+
+                        <button @click="show = false"
+                            class="w-full py-2 rounded-xl bg-gray-100 hover:bg-gray-200 transition">
+                            Batal
+                        </button>
+
+                        <form method="POST" action="{{ route('logout') }}" class="w-full">
+                            @csrf
+                            <button type="submit"
+                                class="w-full py-2 rounded-xl bg-red-600 text-white hover:bg-red-700 transition">
+                                Ya, Keluar
+                            </button>
+                        </form>
 
                     </div>
 
