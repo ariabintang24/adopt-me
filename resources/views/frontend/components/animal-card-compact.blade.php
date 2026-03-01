@@ -14,7 +14,10 @@
             })
             .then(res => res.json())
             .then(() => {
-                // langsung hilangkan card dari DOM
+                window.dispatchEvent(new CustomEvent('toast-success', {
+                    detail: 'Removed ❌ from favorites.'
+                }));
+
                 $el.remove();
             })
             .finally(() => this.loading = false)

@@ -1,24 +1,38 @@
 <div x-data="{
-    isFavorite: @json(isset($animal->is_favorite)
-            ? $animal->is_favorite > 0
-            : auth()->check() && auth()->user()->favorites->contains($animal->id)),
+    isLoggedIn: {{ auth()->check() ? 'true' : 'false' }},
+    isFavorite: {{ auth()->check() ? (auth()->user()->favorites->contains($animal->id) ? 'true' : 'false') : 'false' }},
     loading: false,
-    toggle() {
+
+    async toggle() {
+        if (!this.isLoggedIn) {
+            window.dispatchEvent(new CustomEvent('toast-error', {
+                detail: 'Oops! You need to log in to add favorites.'
+            }));
+            return;
+        }
+
         if (this.loading) return;
         this.loading = true;
 
-        fetch('{{ route('favorite.toggle', $animal->id) }}', {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json'
-                }
-            })
-            .then(res => res.json())
-            .then(() => {
-                this.isFavorite = !this.isFavorite;
-            })
-            .finally(() => this.loading = false)
+        const res = await fetch('{{ route('favorite.toggle', $animal->id) }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        });
+
+        if (res.ok) {
+            this.isFavorite = !this.isFavorite;
+
+            window.dispatchEvent(new CustomEvent('toast-success', {
+                detail: this.isFavorite ?
+                    'Added ✅ to favorites.' :
+                    'Removed ❌ from favorites.'
+            }));
+        }
+
+        this.loading = false;
     }
 }"
     class="relative group bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
