@@ -10,6 +10,8 @@ class AnimalController extends Controller
 {
     public function index(Request $request)
     {
+        $search = $request->search;
+
         $animals = Animal::query()
             ->with(['category', 'images'])
             ->withCount([
@@ -20,11 +22,19 @@ class AnimalController extends Controller
                 }
             ])
             ->where('status', 'available')
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%')
+                        ->orWhereHas('category', function ($cat) use ($search) {
+                            $cat->where('name', 'like', '%' . $search . '%');
+                        });
+                });
+            })
             ->latest()
             ->paginate(12)
             ->withQueryString();
 
-        return view('frontend.animals.index', compact('animals'));
+        return view('frontend.animals.index', compact('animals', 'search'));
     }
 
     public function show(string $slug)
@@ -34,6 +44,16 @@ class AnimalController extends Controller
             // ->where('status', 'available')
             ->firstOrFail();
 
-        return view('frontend.animals.show', compact('animal'));
+        $userRequest = null;
+
+        if (auth()->check()) {
+            $userRequest = auth()->user()
+                ->adoptionRequests()
+                ->where('animal_id', $animal->id)
+                ->latest()
+                ->first();
+        }
+
+        return view('frontend.animals.show', compact('animal', 'userRequest'));
     }
 }
