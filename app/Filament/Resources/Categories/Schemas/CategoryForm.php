@@ -21,6 +21,7 @@ class CategoryForm
                     ->disk('public')
                     ->directory('categories')
                     ->visibility('public')
+                    ->required(),
             ]);
     }
 }

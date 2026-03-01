@@ -25,7 +25,9 @@ class CategoriesTable
                     ->sortable(),
 
                 ImageColumn::make('image')
-                    ->circular(),
+                    ->disk('public')
+                    ->circular()
+                    ->height(50),
             ])
             ->filters([
                 TrashedFilter::make(),
