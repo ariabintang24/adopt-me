@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Adoptions\Schemas;
 
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -32,6 +34,15 @@ class AdoptionInfolist
             TextEntry::make('admin_note')
                 ->placeholder('No admin note'),
             TextEntry::make('created_at')->dateTime(),
+            ImageEntry::make('animal.images.image')
+                ->label('Animal Images')
+                ->disk('public')
+                ->multiple()
+                ->height(180)
+                ->extraImgAttributes([
+                    'class' => 'rounded-xl object-cover'
+                ])
+                ->columnSpanFull(),
         ]);
     }
 }
