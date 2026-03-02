@@ -16,19 +16,19 @@ class AdoptionService
         $this->adoptionRepository = $adoptionRepository;
     }
 
-    public function createAdoption(array $data)
-    {
-        // Cegah double request
-        $exists = AdoptionRequest::where('user_id', $data['user_id'])
-            ->where('animal_id', $data['animal_id'])
-            ->exists();
+    // public function createAdoption(array $data)
+    // {
+    //     // Cegah double request
+    //     $exists = AdoptionRequest::where('user_id', $data['user_id'])
+    //         ->where('animal_id', $data['animal_id'])
+    //         ->exists();
 
-        if ($exists) {
-            throw new \Exception('You have already requested this animal.');
-        }
+    //     if ($exists) {
+    //         throw new \Exception('You have already requested this animal.');
+    //     }
 
-        return $this->adoptionRepository->create($data);
-    }
+    //     return $this->adoptionRepository->create($data);
+    // }
 
     public function approve(int $adoptionId, int $adminId)
     {
@@ -65,8 +65,8 @@ class AdoptionService
                 ->where('status', 'pending')
                 ->where('id', '!=', $adoption->id)
                 ->update([
-                    'status' => 'rejected',
-                    'admin_note' => 'Another request has been approved.',
+                    'status' => AdoptionRequest::STATUS_AUTO_REJECTED,
+                    'admin_note' => AdoptionRequest::AUTO_REJECT_NOTE,
                 ]);
         });
     }
@@ -87,21 +87,29 @@ class AdoptionService
 
     public function submit(int $userId, int $animalId, array $data)
     {
-        $activeRequest = $this->adoptionRepository
-            ->findActiveByUserAndAnimal($userId, $animalId);
+        return DB::transaction(function () use ($userId, $animalId, $data) {
 
-        // 🚫 Kalau masih ada pending/approved
-        if ($activeRequest) {
-            throw new \Exception('You already have an active adoption request for this animal.');
-        }
+            $animal = Animal::lockForUpdate()->findOrFail($animalId);
 
-        // 🆕 Selalu create baru (history preserved)
-        return $this->adoptionRepository->create([
-            'user_id' => $userId,
-            'animal_id' => $animalId,
-            ...$data,
-            'status' => 'pending',
-        ]);
+            if ($animal->status === 'adopted') {
+                throw new \Exception('This animal has already been adopted.');
+            }
+
+            $activeRequest = $this->adoptionRepository
+                ->findActiveByUserAndAnimal($userId, $animalId);
+
+            if ($activeRequest) {
+                throw new \Exception('You already have an active adoption request for this animal.');
+            }
+
+            return $this->adoptionRepository->create([
+                'user_id' => $userId,
+                'animal_id' => $animalId,
+                ...$data,
+                'status' => 'pending',
+            ]);
+        });
+
 
         // $existing = AdoptionRequest::where('user_id', $userId)
         //     ->where('animal_id', $animalId)

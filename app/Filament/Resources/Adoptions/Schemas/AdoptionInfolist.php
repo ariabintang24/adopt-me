@@ -34,15 +34,17 @@ class AdoptionInfolist
             TextEntry::make('admin_note')
                 ->placeholder('No admin note'),
             TextEntry::make('created_at')->dateTime(),
-            ImageEntry::make('animal.images.image')
+            RepeatableEntry::make('animal.images')
                 ->label('Animal Images')
-                ->disk('public')
-                ->multiple()
-                ->height(180)
-                ->extraImgAttributes([
-                    'class' => 'rounded-xl object-cover'
+                ->schema([
+                    ImageEntry::make('image')
+                        ->disk('public')
+                        ->height(150)
+                        ->extraImgAttributes([
+                            'class' => 'rounded-lg'
+                        ]),
                 ])
-                ->columnSpanFull(),
+                ->columns(3),
         ]);
     }
 }

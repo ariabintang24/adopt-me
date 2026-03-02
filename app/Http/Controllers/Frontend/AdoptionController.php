@@ -7,6 +7,7 @@ use App\Models\AdoptionRequest;
 use App\Models\Animal;
 use App\Services\AdoptionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdoptionController extends Controller
 {
@@ -70,6 +71,28 @@ class AdoptionController extends Controller
             return redirect()
                 ->route('animals.show', $animal->slug)
                 ->with('error', $e->getMessage());
+        }
+    }
+
+    public function approve($id, AdoptionService $service)
+    {
+        try {
+            $service->approve($id, auth()->id());
+
+            return back()->with('success', 'Adoption approved successfully.');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function reject($id, Request $request, AdoptionService $service)
+    {
+        try {
+            $service->reject($id, $request->admin_note);
+
+            return back()->with('success', 'Adoption request rejected.');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
     }
 }
