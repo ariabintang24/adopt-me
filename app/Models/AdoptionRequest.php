@@ -10,6 +10,11 @@ class AdoptionRequest extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const STATUS_AUTO_REJECTED = 'auto_rejected';
+
+    const AUTO_REJECT_NOTE =
+    'Automatically rejected because this animal has been adopted by another applicant.';
+
     protected $fillable = [
         'user_id',
         'animal_id',
@@ -51,5 +56,16 @@ class AdoptionRequest extends Model
     public function isPending(): bool
     {
         return $this->status === 'pending';
+    }
+
+    public function getStatusLabelAttribute() //status_label
+    {
+        return match ($this->status) {
+            'pending'        => 'Pending',
+            'approved'       => 'Approved',
+            'rejected'       => 'Rejected',
+            'auto_rejected'  => 'Auto Rejected',
+            default          => ucfirst(str_replace('_', ' ', $this->status)),
+        };
     }
 }

@@ -184,10 +184,16 @@
 
                                             <span
                                                 class="inline-block mt-2 px-3 py-1 text-xs rounded-full
-                                            @if ($adoption->status === 'approved') bg-green-100 text-green-700
-                                            @elseif($adoption->status === 'rejected') bg-red-100 text-red-700
-                                            @else bg-yellow-100 text-yellow-700 @endif">
-                                                {{ ucfirst($adoption->status) }}
+                                                @if ($adoption->status === 'approved') 
+                                                bg-green-100 text-green-700
+                                                @elseif($adoption->status === 'rejected') 
+                                                bg-red-100 text-red-700
+                                                @elseif($adoption->status === 'auto_rejected')
+                                                bg-red-700 text-white
+                                                @else 
+                                                bg-yellow-100 text-yellow-700 @endif">
+
+                                                {{ $adoption->status_label }}
                                             </span>
                                         </div>
                                     </div>
@@ -201,7 +207,7 @@
                                 </div>
 
                                 {{-- ADMIN NOTE --}}
-                                @if ($adoption->status === 'rejected' && $adoption->admin_note)
+                                @if (in_array($adoption->status, ['rejected', 'auto_rejected']) && $adoption->admin_note)
                                     <div class="mt-4 bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
                                         <p class="text-sm text-red-700">
                                             <span class="font-semibold">Admin Note:</span>
