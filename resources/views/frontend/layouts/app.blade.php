@@ -92,6 +92,39 @@
     <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 
     <script>
+        function openFilter() {
+            document.getElementById('filterPanel').classList.remove('translate-x-full');
+            document.getElementById('filterOverlay').classList.remove('hidden');
+        }
+
+        function closeFilter() {
+            document.getElementById('filterPanel').classList.add('translate-x-full');
+            document.getElementById('filterOverlay').classList.add('hidden');
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const filterForm = document.querySelector('#filterPanel form');
+            if (!filterForm) return;
+
+            filterForm.addEventListener('submit', function() {
+
+                const selects = this.querySelectorAll('select');
+
+                selects.forEach(select => {
+                    if (!select.value) {
+                        select.removeAttribute('name'); // 🔥 hapus name kalau kosong
+                    }
+                });
+
+            });
+
+        });
+    </script>
+
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             GLightbox({
                 selector: '.glightbox',
