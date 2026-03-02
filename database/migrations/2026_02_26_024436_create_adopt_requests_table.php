@@ -25,7 +25,8 @@ return new class extends Migration
             $table->enum('status', [
                 'pending',
                 'approved',
-                'rejected'
+                'rejected',
+                'auto_rejected'
             ])->default('pending');
             $table->text('admin_note')->nullable();
             $table->timestamp('approved_at')->nullable();
