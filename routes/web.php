@@ -9,30 +9,45 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/animals', [AnimalController::class, 'index'])->name('animals.index');
-Route::get('/animals/{slug}', [AnimalController::class, 'show'])->name('animals.show');
+Route::prefix('animals')->name('animals.')->group(function () {
+
+    Route::get('/', [AnimalController::class, 'index'])
+        ->name('index');
+
+    Route::get('/{slug}', [AnimalController::class, 'show'])
+        ->name('show');
+});
 
 Route::middleware('auth')->group(function () {
 
-    Route::get(
-        '/adoption/create/{animal}',
-        [AdoptionController::class, 'create']
-    )->name('adoption.create');
+    //Adoption 
+    Route::prefix('adoption')->name('adoption.')->group(function () {
 
-    Route::post(
-        '/adoption/{animal}',
-        [AdoptionController::class, 'store']
-    )->name('adoption.store');
+        Route::get('/create/{animal}', [AdoptionController::class, 'create'])
+            ->name('create');
 
-    Route::post(
-        '/favorite/{animal}',
-        [FavoriteController::class, 'toggle']
-    )->name('favorite.toggle');
+        Route::post('/{animal}', [AdoptionController::class, 'store'])
+            ->name('store');
+    });
 
-    Route::get(
-        '/profile',
-        [ProfileController::class, 'index']
-    )->name('profile');
+    //Favorite 
+    Route::prefix('favorite')->name('favorite.')->group(function () {
+
+        Route::post('/{animal}', [FavoriteController::class, 'toggle'])
+            ->name('toggle');
+    });
+
+    //Profile 
+    Route::prefix('profile')->name('profile.')->group(function () {
+
+        Route::get('/', [ProfileController::class, 'index'])->name('index');
+
+        Route::get('/my-adoptions', [ProfileController::class, 'myAdoptions'])
+            ->name('my-adoptions');
+
+        Route::get('/my-favorites', [ProfileController::class, 'myFavorites'])
+            ->name('my-favorites');
+    });
 });
 
 require __DIR__ . '/auth.php';
