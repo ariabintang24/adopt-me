@@ -29,24 +29,27 @@ class ProfileController extends Controller
         ));
     }
 
-    // public function index()
-    // {
-    //     $user = Auth::user();
+    public function myAdoptions()
+    {
+        $user = auth()->user();
 
-    //     $adoptions = AdoptionRequest::with('animal')
-    //         ->where('user_id', $user->id)
-    //         ->latest()
-    //         ->get();
+        $adoptions = $user->adoptions()
+            ->with(['animal.images'])
+            ->latest()
+            ->get();
 
-    //     $favorites = $user->favorites()
-    //         ->with('animal')
-    //         ->latest()
-    //         ->get();
+        return view('frontend.profile.history', compact('user', 'adoptions'));
+    }
 
-    //     return view('frontend.profile.index', compact(
-    //         'user',
-    //         'adoptions',
-    //         'favorites'
-    //     ));
-    // }
+    public function myFavorites()
+    {
+        $user = auth()->user();
+
+        $favorites = $user->favorites()
+            ->with(['images'])
+            ->latest()
+            ->get();
+
+        return view('frontend.profile.favorites', compact('user', 'favorites'));
+    }
 }

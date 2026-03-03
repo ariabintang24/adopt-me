@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 use Filament\Panel;
 
 
@@ -60,6 +62,11 @@ class User extends Authenticatable
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->hasRole('admin'); //hanya admin yang bisa masuk
+    }
+
+    public function adoptions(): HasMany
+    {
+        return $this->hasMany(AdoptionRequest::class);
     }
 
     // User has many adoption requests
