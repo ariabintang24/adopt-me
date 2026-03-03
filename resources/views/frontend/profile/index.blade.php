@@ -51,25 +51,24 @@
 
                                     {{-- INFO --}}
                                     <button x-show="tab !== 'info'" @click="tab='info'; open=false"
-                                        class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100">
+                                        class="w-full text-center px-4 py-2 rounded-lg hover:bg-gray-100">
                                         My Information
                                     </button>
 
                                     {{-- ADOPTION --}}
-                                    <button x-show="tab !== 'adoption'" @click="tab='adoption'; open=false"
-                                        class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100">
+                                    <a href="{{ route('profile.my-adoptions') }}"
+                                        class="w-full py-3 rounded-xl text-sm bg-gray-100 text-center block">
                                         My Adoption History
-                                    </button>
+                                    </a>
 
-                                    {{-- FAVORITES --}}
-                                    <button x-show="tab !== 'favorites'" @click="tab='favorites'; open=false"
-                                        class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100">
+                                    <a href="{{ route('profile.my-favorites') }}"
+                                        class="w-full py-3 rounded-xl text-sm bg-gray-100 text-center block">
                                         My Favorites
-                                    </button>
+                                    </a>
 
                                     <div class="pt-3 border-t mt-3">
                                         <button @click="$dispatch('open-logout'); open=false"
-                                            class="w-full text-left px-4 py-2 rounded-lg bg-red-600 text-white">
+                                            class="w-full text-center px-4 py-2 rounded-lg bg-red-600 text-white">
                                             Logout
                                         </button>
                                     </div>
@@ -86,17 +85,15 @@
                                     My Information
                                 </button>
 
-                                <button @click="tab='adoption'"
-                                    :class="tab === 'adoption' ? 'bg-indigo-600 text-white' : 'bg-gray-100'"
-                                    class="w-full py-3 rounded-xl text-sm transition">
+                                <a href="{{ route('profile.my-adoptions') }}"
+                                    class="w-full py-3 rounded-xl text-sm bg-gray-100 text-center block">
                                     My Adoption History
-                                </button>
+                                </a>
 
-                                <button @click="tab='favorites'"
-                                    :class="tab === 'favorites' ? 'bg-indigo-600 text-white' : 'bg-gray-100'"
-                                    class="w-full py-3 rounded-xl text-sm transition">
+                                <a href="{{ route('profile.my-favorites') }}"
+                                    class="w-full py-3 rounded-xl text-sm bg-gray-100 text-center block">
                                     My Favorites
-                                </button>
+                                </a>
 
                                 {{-- LOGOUT BUTTON --}}
                                 <div class="pt-4 border-t mt-4">
@@ -150,103 +147,6 @@
                             </div>
 
                         </div>
-                    </div>
-
-
-                    {{-- ================= ADOPTION HISTORY ================= --}}
-                    <div x-show="tab==='adoption'"
-                        class="bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-gray-100">
-
-                        <h2 class="text-xl md:text-2xl font-bold mb-6 md:mb-8">
-                            My Adoption History
-                        </h2>
-
-                        @forelse($adoptions as $adoption)
-                            <div class="p-5 md:p-6 border rounded-2xl mb-6">
-
-                                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-
-                                    {{-- LEFT --}}
-                                    <div class="flex items-center gap-4 md:gap-5">
-                                        <img src="{{ $adoption->animal->images->first()
-                                            ? asset('storage/' . $adoption->animal->images->first()->image)
-                                            : 'https://via.placeholder.com/120' }}"
-                                            class="w-20 h-20 rounded-xl object-cover">
-
-                                        <div>
-                                            <p class="text-lg font-semibold">
-                                                {{ $adoption->animal->name }}
-                                            </p>
-
-                                            <p class="text-sm text-gray-500">
-                                                {{ $adoption->created_at->format('d M Y') }}
-                                            </p>
-
-                                            <span
-                                                class="inline-block mt-2 px-3 py-1 text-xs rounded-full
-                                                @if ($adoption->status === 'approved') 
-                                                bg-green-100 text-green-700
-                                                @elseif($adoption->status === 'rejected') 
-                                                bg-red-100 text-red-700
-                                                @elseif($adoption->status === 'auto_rejected')
-                                                bg-red-700 text-white
-                                                @else 
-                                                bg-yellow-100 text-yellow-700 @endif">
-
-                                                {{ $adoption->status_label }}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    {{-- BUTTON --}}
-                                    <a href="{{ route('animals.show', $adoption->animal->slug) }}"
-                                        class="bg-indigo-600 text-white px-5 py-2 rounded-xl text-sm 
-                                          w-full md:w-auto text-center">
-                                        View Detail
-                                    </a>
-                                </div>
-
-                                {{-- ADMIN NOTE --}}
-                                @if (in_array($adoption->status, ['rejected', 'auto_rejected']) && $adoption->admin_note)
-                                    <div class="mt-4 bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
-                                        <p class="text-sm text-red-700">
-                                            <span class="font-semibold">Admin Note:</span>
-                                            {{ $adoption->admin_note }}
-                                        </p>
-                                    </div>
-                                @endif
-
-                            </div>
-                        @empty
-                            <p class="text-gray-500">No adoption requests yet.</p>
-                        @endforelse
-                    </div>
-
-
-                    {{-- ================= FAVORITES ================= --}}
-                    <div x-show="tab==='favorites'"
-                        class="bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-gray-100">
-
-                        <h2 class="text-xl md:text-2xl font-bold mb-6 md:mb-8">
-                            My Favorites ({{ $favorites->count() }})
-                        </h2>
-
-                        @if ($favorites->count())
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-
-                                @foreach ($favorites as $animal)
-                                    @include('frontend.components.animal-card-compact', [
-                                        'animal' => $animal,
-                                    ])
-                                @endforeach
-
-                            </div>
-                        @else
-                            <div class="py-12 text-center text-gray-500">
-                                No favorites yet 🐾
-                            </div>
-                        @endif
-
                     </div>
 
                 </div>

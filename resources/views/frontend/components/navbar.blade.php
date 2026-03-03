@@ -23,11 +23,12 @@
                 </a>
 
                 @auth
-                    <a href="{{ route('profile') }}"
-                        class="{{ request()->routeIs('profile') ? 'font-semibold text-indigo-600' : 'text-gray-600 hover:text-indigo-600' }}">
+                    <a href="{{ route('profile.index') }}"
+                        class="transition
+   {{ request()->routeIs('profile.*') ? 'text-indigo-600 font-semibold' : 'text-gray-600 hover:text-indigo-600' }}">
                         Profile
-                    </a>
-                @endauth
+                        </a>
+                    @endauth
 
             </div>
 
@@ -82,8 +83,9 @@
             </a>
 
             @auth
-                <a href="{{ route('profile') }}"
-                    class="block {{ request()->routeIs('profile') ? 'font-semibold text-indigo-600' : 'text-gray-700' }}">
+                <a href="{{ route('profile.index') }}"
+                    class="transition
+   {{ request()->routeIs('profile.*') ? 'text-indigo-600 font-semibold' : 'text-gray-600 hover:text-indigo-600' }}">
                     Profile
                 </a>
             @endauth
