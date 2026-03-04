@@ -47,7 +47,7 @@
         </svg>
     </button>
 
-    <a href="{{ route('animals.show', $animal->slug) }}">
+    <a href="{{ route('animals.show', $animal->slug) }}" class="block bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
 
         {{-- IMAGE --}}
         <div class="overflow-hidden">
@@ -59,14 +59,14 @@
         </div>
 
         {{-- CONTENT --}}
-        <div class="p-6">
+        <div class="p-6 flex flex-col min-h-[220px]">
 
             <div class="flex justify-between items-center text-sm text-gray-500 mb-3">
                 <span>{{ $animal->category->name ?? 'Unknown' }}</span>
                 <span>{{ $animal->age }} year(s)</span>
             </div>
 
-            <h3 class="text-lg font-semibold text-gray-800">
+            <h3 class="text-lg font-semibold text-gray-800 line-clamp-2">
                 {{ $animal->name }}
             </h3>
 
@@ -74,7 +74,7 @@
                 {{ ucfirst($animal->gender) }}
             </p>
 
-            <div class="mt-4">
+            <div class="mt-auto pt-4">
                 <span
                     class="inline-block
                     {{ $animal->status === 'available' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}

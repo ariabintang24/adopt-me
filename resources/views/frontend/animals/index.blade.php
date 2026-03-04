@@ -80,89 +80,89 @@
 
 
             {{-- ================= GRID LIST ================= --}}
-            <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-                @forelse($animals as $animal)
-                    @include('frontend.components.animal-card', ['animal' => $animal])
-                @empty
-                    <div class="col-span-full flex flex-col items-center justify-center text-center py-20">
+            <div x-data="{ loading: true }" x-init="setTimeout(() => loading = false, 400)">
 
-                        <img src="{{ asset('images/no-data.png') }}" alt="No results" class="w-44 md:w-56 mb-6 opacity-90">
+                {{-- Skeleton Loading --}}
+                {{-- Skeleton Loading --}}
+                <div x-show="loading" class="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
-                        @php
-                            $hasSearch = request()->filled('search');
-                            $hasFilter = request()->hasAny(['category', 'age', 'gender']);
-                        @endphp
+                    @for ($i = 0; $i < 6; $i++)
+                        <div class="bg-white rounded-2xl shadow-md overflow-hidden animate-pulse flex flex-col">
 
+                            {{-- Image --}}
+                            <div class="aspect-[4/3] bg-gray-200"></div>
 
-                        {{-- ================= SEARCH PRIORITY ================= --}}
-                        @if ($hasSearch)
-                            <h3 class="text-xl font-semibold mb-2">
-                                No results found for
-                                <span class="text-blue-500">"{{ request('search') }}"</span>
-                            </h3>
+                            <div class="p-5 flex flex-col flex-1">
 
-                            <p class="text-gray-500 mb-6 max-w-md">
-                                Try using different keywords or adjust your filters.
-                            </p>
+                                {{-- Title --}}
+                                <div class="h-5 bg-gray-200 rounded w-3/4 mb-3"></div>
 
-                            {{-- Show active filters if any --}}
-                            @if ($hasFilter)
-                                <div class="flex flex-wrap justify-center gap-2 mb-6">
-                                    @foreach (request()->only(['category', 'age', 'gender']) as $key => $value)
-                                        @if ($value)
-                                            <span class="px-3 py-1 text-sm bg-gray-100 rounded-full border">
-                                                {{ ucfirst($key) }}: {{ $value }}
-                                            </span>
-                                        @endif
-                                    @endforeach
+                                {{-- Meta info --}}
+                                <div class="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+                                <div class="h-4 bg-gray-200 rounded w-2/3 mb-4"></div>
+
+                                {{-- Spacer supaya tombol selalu di bawah --}}
+                                <div class="mt-auto">
+
+                                    {{-- Button --}}
+                                    <div class="h-10 bg-gray-200 rounded-xl w-full"></div>
+
                                 </div>
-                            @endif
-
-                            <a href="{{ route('animals.index', request()->except('search')) }}"
-                                class="px-5 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition">
-                                Clear Search
-                            </a>
-
-
-                            {{-- ================= FILTER ONLY ================= --}}
-                        @elseif($hasFilter)
-                            <h3 class="text-xl font-semibold mb-2">
-                                No animals match your selected filters
-                            </h3>
-
-                            <p class="text-gray-500 mb-6 max-w-md">
-                                Try adjusting or clearing some filters to see more animals.
-                            </p>
-
-                            <div class="flex flex-wrap justify-center gap-2 mb-6">
-                                @foreach (request()->only(['category', 'age', 'gender']) as $key => $value)
-                                    @if ($value)
-                                        <span class="px-3 py-1 text-sm bg-gray-100 rounded-full border">
-                                            {{ ucfirst($key) }}: {{ $value }}
-                                        </span>
-                                    @endif
-                                @endforeach
                             </div>
 
-                            <a href="{{ route('animals.index') }}"
-                                class="px-5 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition">
-                                Clear All Filters
-                            </a>
+                        </div>
+                    @endfor
+                </div>
 
+                {{-- Real Animal List --}}
+                <div x-show="!loading" x-transition.opacity.duration.300ms
+                    class="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    @forelse($animals as $animal)
+                        @include('frontend.components.animal-card', ['animal' => $animal])
+                    @empty
+                        <div class="col-span-full flex flex-col items-center justify-center text-center py-20">
 
-                            {{-- ================= DATABASE EMPTY ================= --}}
-                        @else
-                            <h3 class="text-xl font-semibold mb-2">
-                                No animals available right now 🐾
-                            </h3>
+                            <img src="{{ asset('images/no-data.png') }}" alt="No results"
+                                class="w-44 md:w-56 mb-6 opacity-90">
 
-                            <p class="text-gray-500">
-                                Please check back later.
-                            </p>
-                        @endif
+                            @php
+                                $hasSearch = request()->filled('search');
+                                $hasFilter = request()->hasAny(['category', 'age', 'gender']);
+                            @endphp
 
-                    </div>
-                @endforelse
+                            @if ($hasSearch)
+                                <h3 class="text-xl font-semibold mb-2">
+                                    No results found for
+                                    <span class="text-blue-500">"{{ request('search') }}"</span>
+                                </h3>
+
+                                <p class="text-gray-500 mb-6 max-w-md">
+                                    Try using different keywords or adjust your filters.
+                                </p>
+
+                                <a href="{{ route('animals.index', request()->except('search')) }}"
+                                    class="px-5 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition">
+                                    Clear Search
+                                </a>
+                            @elseif($hasFilter)
+                                <h3 class="text-xl font-semibold mb-2">
+                                    No animals match your selected filters
+                                </h3>
+
+                                <a href="{{ route('animals.index') }}"
+                                    class="px-5 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition">
+                                    Clear All Filters
+                                </a>
+                            @else
+                                <h3 class="text-xl font-semibold mb-2">
+                                    No animals available right now 🐾
+                                </h3>
+                            @endif
+
+                        </div>
+                    @endforelse
+                </div>
+
             </div>
 
             <div class="mt-10">
@@ -200,7 +200,9 @@
             <div>
                 <label class="text-sm text-gray-500">Category</label>
                 <select name="category" class="w-full mt-2 border rounded-xl px-4 py-3">
-                    <option value="">All Categories</option>
+                    <option value="" disabled {{ request('category') ? '' : 'selected' }}>
+                        -- Choose Category --
+                    </option>
 
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
@@ -216,14 +218,16 @@
                 <label class="text-sm text-gray-500">Age</label>
                 <select name="age" onchange="this.name = this.value ? 'age' : ''"
                     class="w-full mt-2 border rounded-xl px-4 py-3">
-                    <option value="">All Age</option>
+                    <option value="" disabled {{ request('age') ? '' : 'selected' }}>
+                        -- Choose Age --
+                    </option>
                     <option value="0-1" {{ request('age') == '0-1' ? 'selected' : '' }}>
-                        0 - 1 year
+                        0 - 9 months
                     </option>
                     <option value="1-3" {{ request('age') == '1-3' ? 'selected' : '' }}>
                         1 - 3 years
                     </option>
-                    <option value="3-10" {{ request('age') == '3-10' ? 'selected' : '' }}>
+                    <option value="4-10" {{ request('age') == '4-10' ? 'selected' : '' }}>
                         3+ years
                     </option>
                 </select>
@@ -235,7 +239,9 @@
                 <label class="text-sm text-gray-500">Gender</label>
                 <select name="gender" onchange="this.name = this.value ? 'gender' : ''"
                     class="w-full mt-2 border rounded-xl px-4 py-3">
-                    <option value="">All Gender</option>
+                    <option value="" disabled {{ request('gender') ? '' : 'selected' }}>
+                        -- Choose Gender --
+                    </option>
                     <option value="Male" {{ request('gender') == 'Male' ? 'selected' : '' }}>
                         Male
                     </option>

@@ -46,20 +46,18 @@
         </div>
 
         {{-- CONTENT (COMPACT) --}}
-        <div class="p-4">
+        <div class="p-4 flex flex-col min-h-[120px]">
 
-            <h3 class="text-base font-semibold text-gray-800">
+            <h3 class="text-base font-semibold text-gray-800 line-clamp-2 break-words">
                 {{ $animal->name }}
             </h3>
 
-            <div class="mt-3">
-                <span
-                    class="inline-block
-                    {{ $animal->status === 'available' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}
-                    text-xs font-medium px-3 py-1 rounded-full">
-                    {{ ucfirst($animal->status) }}
-                </span>
-            </div>
+            <span
+                class="mt-auto inline-block w-fit
+        {{ $animal->status === 'available' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}
+        text-xs font-medium px-3 py-1 rounded-full">
+                {{ ucfirst($animal->status) }}
+            </span>
 
         </div>
     </a>
