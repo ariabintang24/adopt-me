@@ -31,22 +31,24 @@
 
 
     {{-- ================= CATEGORIES ================= --}}
-    <section class="bg-gray-50 py-16">
-        <div class="max-w-7xl mx-auto px-6">
+    <section class="bg-gray-50 py-20">
+        <div class="max-w-6xl mx-auto px-6">
 
-            <div class="flex justify-between items-center mb-10">
-                <h2 class="text-2xl font-bold">Browse by Category</h2>
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-bold">
+                    Browse by Category
+                </h2>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            <div class="grid grid-cols-2 lg:grid-cols-6 gap-6">
+
                 @foreach ($categories as $category)
                     <a href="{{ route('animals.index', ['category' => $category->id]) }}"
-                        class="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition text-center">
+                        class="bg-white p-6 rounded-2xl shadow-md text-center flex flex-col items-center justify-center ">
 
-                        <div class="flex justify-center mb-4">
-                            <img src="{{ Storage::url($category->image) }}" class="w-12 h-12 object-contain"
-                                alt="{{ $category->name }}">
-                        </div>
+                        <img src="{{ asset('storage/' . $category->image) }}"
+                            class="w-12 h-12 object-contain mb-3 transform transition-all duration-300 hover:-translate-y-2"
+                            alt="{{ $category->name }}">
 
                         <p class="text-sm font-semibold text-gray-700">
                             {{ $category->name }}
@@ -54,6 +56,7 @@
 
                     </a>
                 @endforeach
+
             </div>
 
         </div>
@@ -62,18 +65,20 @@
 
 
     {{-- ================= LATEST ANIMALS ================= --}}
-    <section class="bg-white py-16">
-        <div class="max-w-7xl mx-auto px-6">
+    <section class="bg-white py-20 border-t">
+        <div class="max-w-6xl mx-auto px-6">
 
-            <div class="flex justify-between items-center mb-10">
-                <h2 class="text-2xl font-bold">Latest Animals</h2>
+            <div class="flex justify-between items-center mb-14">
+                <h2 class="text-3xl font-bold">
+                    Latest Animals
+                </h2>
 
-                <a href="{{ route('animals.index') }}" class="text-indigo-600 text-sm font-medium hover:underline">
+                <a href="{{ route('animals.index') }}" class="text-indigo-600 text-sm font-semibold">
                     View all →
                 </a>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
                 @foreach ($latestAnimals as $animal)
                     @include('frontend.components.animal-card', ['animal' => $animal])
                 @endforeach
@@ -253,31 +258,34 @@
                 Have questions? Send us a message.
             </p>
 
-            <form action="#" method="POST" class="space-y-6 text-left">
+            <form action="{{ route('contact.send') }}" method="POST" class="space-y-6 text-left">
                 @csrf
 
                 <div>
                     <label class="block text-sm font-medium mb-2">Name</label>
-                    <input type="text" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500"
-                        placeholder="Your name">
+                    <input type="text" name="name"
+                        class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500" placeholder="Your name"
+                        required>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium mb-2">Email</label>
-                    <input type="email" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500"
-                        placeholder="Your email">
+                    <input type="email" name="email"
+                        class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500" placeholder="Your email"
+                        required>
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium mb-2">Message</label>
-                    <textarea rows="5" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500"
-                        placeholder="Write your message..."></textarea>
+                    <textarea name="message" rows="5" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-indigo-500"
+                        placeholder="Write your message..." required></textarea>
                 </div>
 
                 <button type="submit"
                     class="bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 transition">
                     Send Message →
                 </button>
+
             </form>
 
         </div>

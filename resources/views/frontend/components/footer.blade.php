@@ -41,15 +41,25 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('home') }}" class="hover:text-emerald-600 transition-colors duration-300">
-                        Daftar Hewan
+                    <a href="{{ route('animals.index') }}"
+                        class="hover:text-emerald-600 transition-colors duration-300">
+                        Animals
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{ route('home') }}" class="hover:text-emerald-600 transition-colors duration-300">
-                        Pengajuan Adopsi
-                    </a>
+
+                    @auth
+                        <a href="{{ route('profile.index') }}"
+                            class="hover:text-emerald-600 transition-colors duration-300">
+                            Profile
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="hover:text-emerald-600 transition-colors duration-300">
+                            Profile
+                        </a>
+                    @endauth
+
                 </li>
             </ul>
         </div>

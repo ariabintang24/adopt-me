@@ -27,8 +27,8 @@
                         class="transition
    {{ request()->routeIs('profile.*') ? 'text-indigo-600 font-semibold' : 'text-gray-600 hover:text-indigo-600' }}">
                         Profile
-                        </a>
-                    @endauth
+                    </a>
+                @endauth
 
             </div>
 
@@ -68,30 +68,33 @@
     </div>
 
     {{-- MOBILE MENU --}}
-    <div x-show="open" x-transition class="md:hidden bg-white border-t">
+    {{-- MOBILE MENU --}}
+    <div x-show="open" x-transition class="md:hidden bg-white border-t shadow-lg rounded-b-2xl">
 
-        <div class="px-4 py-4 space-y-4 text-center">
+        <div class="px-6 py-8 space-y-6 text-center">
 
             <a href="{{ route('home') }}"
-                class="block {{ request()->routeIs('home') ? 'font-semibold text-indigo-600' : 'text-gray-700' }}">
+                class="block py-2 transition
+           {{ request()->routeIs('home') ? 'font-semibold text-indigo-600' : 'text-gray-700 hover:text-indigo-600' }}">
                 Home
             </a>
 
             <a href="{{ route('animals.index') }}"
-                class="block {{ request()->routeIs('animals.*') ? 'font-semibold text-indigo-600' : 'text-gray-700' }}">
+                class="block py-2 transition
+           {{ request()->routeIs('animals.*') ? 'font-semibold text-indigo-600' : 'text-gray-700 hover:text-indigo-600' }}">
                 Animals
             </a>
 
             @auth
                 <a href="{{ route('profile.index') }}"
-                    class="transition
-   {{ request()->routeIs('profile.*') ? 'text-indigo-600 font-semibold' : 'text-gray-600 hover:text-indigo-600' }}">
+                    class="block py-2 transition
+               {{ request()->routeIs('profile.*') ? 'text-indigo-600 font-semibold' : 'text-gray-700 hover:text-indigo-600' }}">
                     Profile
                 </a>
             @endauth
 
             @guest
-                <div class="pt-4 space-y-3">
+                <div class="pt-6 space-y-4">
 
                     <a href="{{ route('login') }}"
                         class="block px-4 py-2 rounded-xl border border-indigo-600 text-indigo-600">
