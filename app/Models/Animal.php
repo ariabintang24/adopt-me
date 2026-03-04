@@ -63,4 +63,23 @@ class Animal extends Model
     {
         return $this->status === 'available';
     }
+
+    public function getAgeAttribute()
+    {
+        $months = $this->age_in_months;
+
+        $years = floor($months / 12);
+        $remainingMonths = $months % 12;
+
+        if ($years > 0 && $remainingMonths > 0) {
+            return $years . ' year' . ($years > 1 ? 's' : '') . ' ' .
+                $remainingMonths . ' month' . ($remainingMonths > 1 ? 's' : '');
+        }
+
+        if ($years > 0) {
+            return $years . ' year' . ($years > 1 ? 's' : '');
+        }
+
+        return $remainingMonths . ' month' . ($remainingMonths > 1 ? 's' : '');
+    }
 }

@@ -106,7 +106,7 @@
                         <div class="flex justify-between">
                             <span class="text-gray-500">Usia</span>
                             <span class="font-medium">
-                                {{ $animal->age }} year(s)
+                                {{ $animal->age }}
                             </span>
                         </div>
 

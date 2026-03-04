@@ -216,20 +216,22 @@
             {{-- AGE --}}
             <div>
                 <label class="text-sm text-gray-500">Age</label>
-                <select name="age" onchange="this.name = this.value ? 'age' : ''"
-                    class="w-full mt-2 border rounded-xl px-4 py-3">
-                    <option value="" disabled {{ request('age') ? '' : 'selected' }}>
-                        -- Choose Age --
+                <select name="age" class="w-full mt-2 border rounded-xl px-4 py-3">
+
+                    <option value="">-- Choose Age --</option>
+
+                    <option value="0-11" {{ request('age') == '0-11' ? 'selected' : '' }}>
+                        0 - 11 months
                     </option>
-                    <option value="0-1" {{ request('age') == '0-1' ? 'selected' : '' }}>
-                        0 - 9 months
+
+                    <option value="1-2" {{ request('age') == '1-2' ? 'selected' : '' }}>
+                        1 - 2 years
                     </option>
-                    <option value="1-3" {{ request('age') == '1-3' ? 'selected' : '' }}>
-                        1 - 3 years
+
+                    <option value="2+" {{ request('age') == '2+' ? 'selected' : '' }}>
+                        2+ years
                     </option>
-                    <option value="4-10" {{ request('age') == '4-10' ? 'selected' : '' }}>
-                        3+ years
-                    </option>
+
                 </select>
             </div>
 

@@ -52,10 +52,13 @@ class AnimalController extends Controller
 
         // 🎂 AGE
         if ($request->filled('age')) {
-            $range = explode('-', $request->age);
 
-            if (count($range) === 2) {
-                $animals->whereBetween('age', [(int)$range[0], (int)$range[1]]);
+            if ($request->age === '0-11') {
+                $animals->whereBetween('age_in_months', [0, 11]);
+            } elseif ($request->age === '1-2') {
+                $animals->whereBetween('age_in_months', [12, 24]);
+            } elseif ($request->age === '2+') {
+                $animals->where('age_in_months', '>', 24);
             }
         }
 

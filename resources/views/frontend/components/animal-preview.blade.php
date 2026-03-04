@@ -35,7 +35,7 @@
 
             <div class="flex justify-between">
                 <span class="font-medium text-gray-700">Age</span>
-                <span>{{ $animal->age }} year(s)</span>
+                <span>{{ $animal->age }}</span>
             </div>
 
             <div class="flex justify-between">
