@@ -36,7 +36,7 @@ class ProfileController extends Controller
         $adoptions = $user->adoptions()
             ->with(['animal.images'])
             ->latest()
-            ->get();
+            ->paginate(5);
 
         return view('frontend.profile.history', compact('user', 'adoptions'));
     }
@@ -48,7 +48,7 @@ class ProfileController extends Controller
         $favorites = $user->favorites()
             ->with(['images'])
             ->latest()
-            ->get();
+            ->paginate(6);
 
         return view('frontend.profile.favorites', compact('user', 'favorites'));
     }

@@ -27,6 +27,13 @@
                 @endif
 
             </div>
+
+            {{-- PAGINATION --}}
+            @if ($favorites->hasPages())
+                <div class="mt-10">
+                    {{ $favorites->links() }}
+                </div>
+            @endif
     </section>
 
 @endsection
