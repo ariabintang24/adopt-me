@@ -64,7 +64,7 @@ class AdoptionController extends Controller
             );
 
             return redirect()
-                ->route('profile')
+                ->route('profile.my-adoptions')
                 ->with('success', 'Your adoption request has been submitted.');
         } catch (\Exception $e) {
 

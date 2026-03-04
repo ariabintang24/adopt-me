@@ -30,7 +30,8 @@
             this.timeout = setTimeout(() => this.show = false, 4000);
         }
     }" x-on:toast-success.window="trigger('success', $event.detail)"
-        x-on:toast-error.window="trigger('error', $event.detail)" class="fixed top-6 right-6 z-[9999] w-96 space-y-3">
+        x-on:toast-error.window="trigger('error', $event.detail)"
+        class="fixed top-6 right-4 left-4 sm:left-auto sm:w-96 z-[9999] space-y-3">
 
         <template x-if="show">
             <div x-transition class="relative overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5 bg-white">
@@ -133,6 +134,26 @@
             });
         });
     </script>
+
+    @if (session('success'))
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                window.dispatchEvent(new CustomEvent('toast-success', {
+                    detail: "{{ session('success') }}"
+                }));
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                window.dispatchEvent(new CustomEvent('toast-error', {
+                    detail: "{{ session('error') }}"
+                }));
+            });
+        </script>
+    @endif
 
     <style>
         .toast-progress {
