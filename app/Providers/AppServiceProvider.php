@@ -6,6 +6,7 @@ use App\Interfaces\AdoptionRepositoryInterface;
 use App\Interfaces\AnimalRepositoryInterface;
 use App\Repositories\AdoptionRepository;
 use App\Repositories\AnimalRepository;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,6 +31,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::useTailwind();
     }
 }

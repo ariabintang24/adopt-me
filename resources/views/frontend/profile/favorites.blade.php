@@ -6,9 +6,9 @@
 
             <div class="bg-white rounded-3xl p-6 md:p-10 border border-gray-100">
 
-                <h2 class="text-xl md:text-2xl font-bold mb-6 md:mb-8">
-                    My Favorites ({{ $favorites->count() }})
-                </h2>
+                @include('frontend.components.profile-header', [
+                    'title' => 'My Favorites (' . $favorites->total() . ')',
+                ])
 
                 @if ($favorites->count())
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

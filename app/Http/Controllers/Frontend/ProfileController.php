@@ -12,20 +12,33 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
+        $pendingCount = $user->adoptions()->where('status', 'pending')->count();
+
+        $approvedCount = $user->adoptions()->where('status', 'approved')->count();
+
+        $rejectedCount = $user->adoptions()
+            ->whereIn('status', ['rejected', 'auto_rejected'])
+            ->count();
+
         $adoptions = $user->adoptionRequests()
             ->with('animal.images')
             ->latest()
+            ->take(3) //menampilkan preview
             ->get();
 
         $favorites = $user->favorites()
             ->with(['category', 'images'])
             ->latest()
+            ->take(3) //menampilkan preview
             ->get();
 
         return view('frontend.profile.index', compact(
             'user',
             'adoptions',
-            'favorites'
+            'favorites',
+            'pendingCount',
+            'approvedCount',
+            'rejectedCount'
         ));
     }
 

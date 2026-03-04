@@ -4,13 +4,12 @@
     <section class="bg-gray-50 py-10">
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
 
-            <h2 class="text-xl md:text-2xl font-bold mb-6 md:mb-8">
-                My Adoption History
-            </h2>
+            @include('frontend.components.profile-header', [
+                'title' => 'My Adoption History',
+            ])
 
             <div x-data="{ loading: true }" x-init="setTimeout(() => loading = false, 400)">
 
-                {{-- ================= SKELETON ================= --}}
                 {{-- ================= SKELETON ================= --}}
                 <div x-show="loading">
 
@@ -74,12 +73,7 @@
                                         </p>
 
                                         <span
-                                            class="inline-block mt-2 px-3 py-1 text-xs rounded-full
-                                        @if ($adoption->status === 'approved') bg-green-100 text-green-700
-                                        @elseif($adoption->status === 'rejected') bg-red-100 text-red-700
-                                        @elseif($adoption->status === 'auto_rejected') bg-red-700 text-white
-                                        @else bg-yellow-100 text-yellow-700 @endif">
-
+                                            class="inline-block mt-2 px-3 py-1 text-xs rounded-full {{ $adoption->status_color }}">
                                             {{ $adoption->status_label }}
                                         </span>
                                     </div>

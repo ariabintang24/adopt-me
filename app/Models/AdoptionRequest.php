@@ -68,4 +68,15 @@ class AdoptionRequest extends Model
             default          => ucfirst(str_replace('_', ' ', $this->status)),
         };
     }
+
+
+    public function getStatusColorAttribute()
+    {
+        return match ($this->status) {
+            'approved'      => 'bg-green-100 text-green-700',
+            'rejected'      => 'bg-red-100 text-red-700',
+            'auto_rejected' => 'bg-red-700 text-white',
+            default         => 'bg-yellow-100 text-yellow-700', // pending
+        };
+    }
 }
