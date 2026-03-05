@@ -66,6 +66,15 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/my-posts', [ProfileController::class, 'myPosts'])
             ->name('my-posts');
+
+        Route::get('/my-posts/{animal}/edit', [ProfileController::class, 'editPost'])
+            ->name('posts.edit');
+
+        Route::put('/my-posts/{animal}', [ProfileController::class, 'updatePost'])
+            ->name('posts.update');
+
+        Route::delete('/my-posts/{animal}', [ProfileController::class, 'deletePost'])
+            ->name('posts.delete');
     });
 });
 

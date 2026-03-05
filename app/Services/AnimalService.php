@@ -57,6 +57,46 @@ class AnimalService
     }
 
     /*
+    User Posts
+    */
+
+    public function getUserPosts($userId)
+    {
+        return Animal::where('created_by', $userId)
+            ->latest()
+            ->paginate(6);
+    }
+
+    public function getUserPostById(Animal $animal, $userId)
+    {
+        if ($animal->created_by !== $userId) {
+            abort(403);
+        }
+
+        return $animal;
+    }
+
+    public function updateUserPost(Animal $animal, array $data, $userId)
+    {
+        if ($animal->created_by !== $userId) {
+            abort(403);
+        }
+
+        $animal->update($data);
+
+        return $animal;
+    }
+
+    public function deleteUserPost(Animal $animal, $userId)
+    {
+        if ($animal->created_by !== $userId) {
+            abort(403);
+        }
+
+        return $animal->delete();
+    }
+
+    /*
     Private Helpers
     */
 
