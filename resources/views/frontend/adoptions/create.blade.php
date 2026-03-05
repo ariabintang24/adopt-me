@@ -10,7 +10,7 @@
                 @include('frontend.components.animal-preview', ['animal' => $animal])
 
                 {{-- RIGHT FORM --}}
-                <div x-data="{ openConfirm: false }" class="bg-white rounded-3xl shadow-lg p-8">
+                <div x-data="{ openConfirm: false }" class="bg-white rounded-3xl shadow-md p-8">
 
                     <h1 class="text-2xl font-bold mb-6">
                         Adoption Form
@@ -76,30 +76,33 @@
 
                     {{-- CONFIRM MODAL --}}
                     <div x-show="openConfirm" x-transition
-                        class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+                        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
 
-                        <div @click.away="openConfirm = false" class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+                        <div @click.away="openConfirm = false"
+                            class="bg-white rounded-2xl shadow-md w-full max-w-md p-6 sm:p-8">
 
-                            <h2 class="text-lg font-semibold mb-2">
+                            <h2 class="text-lg font-semibold mb-3">
                                 Confirm Adoption Request
                             </h2>
 
-                            <p class="text-sm text-gray-600 mb-6">
+                            <p class="text-sm text-gray-600 mb-6 leading-relaxed">
                                 Are you sure you want to submit this adoption request?
                                 Please make sure all information is correct.
                             </p>
 
-                            <div class="flex justify-end gap-3">
+                            {{-- BUTTONS --}}
+                            <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
+
                                 <button type="button" @click="openConfirm = false"
-                                    class="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm">
+                                    class="w-full sm:w-auto px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm">
                                     Cancel
                                 </button>
 
-                                {{-- 🔥 FIX DISINI --}}
                                 <button type="button" @click="$refs.adoptionForm.submit()"
-                                    class="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 text-sm">
+                                    class="w-full sm:w-auto px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 text-sm">
                                     Yes, Submit
                                 </button>
+
                             </div>
 
                         </div>

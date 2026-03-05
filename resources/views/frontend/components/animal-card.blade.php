@@ -27,15 +27,13 @@
 
             window.dispatchEvent(new CustomEvent('toast-success', {
                 detail: this.isFavorite ?
-                    'Added ✅ to favorites.' :
-                    'Removed ❌ from favorites.'
+                    'Added ✅ to favorites.' : 'Removed ❌ from favorites.'
             }));
         }
 
         this.loading = false;
     }
-}"
-    class="relative group bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
+}" class="relative group bg-white rounded-2xl shadow transition overflow-hidden">
 
     {{-- ❤️ Favorite Button --}}
     <button type="button" @click.prevent.stop="toggle()"
@@ -47,7 +45,8 @@
         </svg>
     </button>
 
-    <a href="{{ route('animals.show', $animal->slug) }}" class="block bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition">
+    <a href="{{ route('animals.show', $animal->slug) }}"
+        class="block bg-white rounded-2xl shadow-sm overflow-hidden transition">
 
         {{-- IMAGE --}}
         <div class="overflow-hidden">
@@ -63,7 +62,7 @@
 
             <div class="flex justify-between items-center text-sm text-gray-500 mb-3">
                 <span>{{ $animal->category->name ?? 'Unknown' }}</span>
-                <span>{{ $animal->age }} year(s)</span>
+                <span>{{ $animal->age }}</span>
             </div>
 
             <h3 class="text-lg font-semibold text-gray-800 line-clamp-2">

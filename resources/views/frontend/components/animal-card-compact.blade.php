@@ -23,7 +23,7 @@
             .finally(() => this.loading = false)
     }
 }"
-    class="relative group bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
+    class="relative group bg-white rounded-2xl shadow transition overflow-hidden">
 
     {{-- ❤️ Remove Favorite --}}
     <button type="button" @click.prevent.stop="toggle()"

@@ -1,4 +1,4 @@
-<div class="bg-white rounded-3xl shadow-lg overflow-hidden">
+<div class="bg-white rounded-3xl shadow-md overflow-hidden">
 
     @php
         $image = optional($animal->images)->first();
