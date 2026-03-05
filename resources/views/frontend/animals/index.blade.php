@@ -205,7 +205,7 @@
                     </option>
 
                     @foreach ($categories as $cat)
-                        <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
+                        <option value="{{ $cat->slug }}" {{ request('category') == $cat->slug ? 'selected' : '' }}>
                             {{ $cat->name }}
                         </option>
                     @endforeach

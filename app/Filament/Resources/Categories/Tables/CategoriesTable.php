@@ -24,6 +24,11 @@ class CategoriesTable
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('slug')
+                    ->searchable()
+                    ->copyable()
+                    ->color('gray'),
+
                 ImageColumn::make('image')
                     ->disk('public')
                     ->circular()

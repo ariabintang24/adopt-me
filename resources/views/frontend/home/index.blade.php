@@ -43,7 +43,7 @@
             <div class="grid grid-cols-2 lg:grid-cols-6 gap-6">
 
                 @foreach ($categories as $category)
-                    <a href="{{ route('animals.index', ['category' => $category->id]) }}"
+                    <a href="{{ route('animals.index', ['category' => $category->slug]) }}"
                         class="bg-white p-6 rounded-2xl shadow-md text-center flex flex-col items-center justify-center ">
 
                         <img src="{{ asset('storage/' . $category->image) }}"

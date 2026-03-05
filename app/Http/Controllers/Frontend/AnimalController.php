@@ -42,7 +42,9 @@ class AnimalController extends Controller
 
         // 🐾 CATEGORY
         if ($request->filled('category')) {
-            $animals->where('category_id', $request->category);
+            $animals->whereHas('category', function ($q) use ($request) {
+                $q->where('slug', $request->category);
+            });
         }
 
         // 🚻 GENDER

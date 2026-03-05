@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Categories\Schemas;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class CategoryForm
 {
@@ -15,6 +16,11 @@ class CategoryForm
                 TextInput::make('name')
                     ->required()
                     ->unique(ignoreRecord: true),
+
+                TextInput::make('slug')
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->helperText('Gunakan huruf kecil tanpa spasi. Contoh: kucing'),
 
                 FileUpload::make('image')
                     ->image()
