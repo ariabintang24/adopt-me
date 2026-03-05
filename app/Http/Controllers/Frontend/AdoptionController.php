@@ -13,6 +13,14 @@ class AdoptionController extends Controller
 {
     public function create(Animal $animal)
     {
+
+        // 🚫 Tidak boleh adopt post sendiri
+        if ($animal->created_by === auth()->id()) {
+            return redirect()
+                ->route('animals.show', $animal->slug)
+                ->with('error', 'You cannot adopt your own animal post.');
+        }
+
         // 🚫 Animal sudah adopted
         if ($animal->status !== 'available') {
             return redirect()
@@ -50,17 +58,20 @@ class AdoptionController extends Controller
 
     public function store(Request $request, Animal $animal, AdoptionService $service)
     {
+        $validated = $request->validate([
+            'reason' => 'required|string|max:1000',
+            'has_experience' => 'required|boolean',
+            'residence_type' => 'required|string|max:255',
+            'other_pets' => 'required|boolean',
+            'other_pets_detail' => 'nullable|string|max:255',
+        ]);
+
         try {
+
             $service->submit(
                 auth()->id(),
                 $animal->id,
-                $request->only([
-                    'reason',
-                    'has_experience',
-                    'residence_type',
-                    'other_pets',
-                    'other_pets_detail'
-                ])
+                $validated
             );
 
             return redirect()
@@ -70,7 +81,8 @@ class AdoptionController extends Controller
 
             return redirect()
                 ->route('animals.show', $animal->slug)
-                ->with('error', $e->getMessage());
+                ->with('error', $e->getMessage())
+                ->withInput();
         }
     }
 

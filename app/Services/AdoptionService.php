@@ -91,6 +91,12 @@ class AdoptionService
 
             $animal = Animal::lockForUpdate()->findOrFail($animalId);
 
+            // 🚫 Tidak boleh adopt post sendiri
+            if ($animal->created_by === $userId) {
+                throw new \Exception('You cannot adopt your own animal post.');
+            }
+
+
             if ($animal->status === 'adopted') {
                 throw new \Exception('This animal has already been adopted.');
             }

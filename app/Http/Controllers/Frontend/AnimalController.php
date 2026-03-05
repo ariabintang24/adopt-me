@@ -109,24 +109,28 @@ class AnimalController extends Controller
     public function store(Request $request)
     {
 
-        $code = 'ANM-' . strtoupper(Str::random(5));
-
-
         $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'age_in_months' => 'required|integer|min:0',
+            'age_years' => 'required|integer|min:0',
+            'age_months' => 'required|integer|min:0|max:11',
             'gender' => 'required',
             'description' => 'required',
+
+            'images' => 'required|array',
             'images.*' => 'image|max:2048'
         ]);
+
+        $code = 'ANM-' . strtoupper(Str::random(5));
+
+        $ageInMonths = ($request->age_years * 12) + $request->age_months;
 
         $animal = Animal::create([
             'name' => $request->name,
             'code' => $code,
             'slug' => Str::slug($request->name) . '-' . uniqid(),
             'category_id' => $request->category_id,
-            'age_in_months' => $request->age_in_months,
+            'age_in_months' => $ageInMonths,
             'gender' => $request->gender,
             'description' => $request->description,
             'status' => 'available',
