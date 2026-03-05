@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdoptionRequest;
+use App\Models\Animal;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
@@ -64,5 +65,14 @@ class ProfileController extends Controller
             ->paginate(6);
 
         return view('frontend.profile.favorites', compact('user', 'favorites'));
+    }
+
+    public function myPosts()
+    {
+        $animals = Animal::where('created_by', auth()->id())
+            ->latest()
+            ->paginate(6);
+
+        return view('frontend.profile.my-posts', compact('animals'));
     }
 }

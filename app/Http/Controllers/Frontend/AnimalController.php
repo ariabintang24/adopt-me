@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Animal;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AnimalController extends Controller
 {
@@ -96,5 +97,56 @@ class AnimalController extends Controller
         }
 
         return view('frontend.animals.show', compact('animal', 'userRequest'));
+    }
+
+    public function create()
+    {
+        $categories = Category::all();
+
+        return view('frontend.animals.create', compact('categories'));
+    }
+
+    public function store(Request $request)
+    {
+
+        $code = 'ANM-' . strtoupper(Str::random(5));
+
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'age_in_months' => 'required|integer|min:0',
+            'gender' => 'required',
+            'description' => 'required',
+            'images.*' => 'image|max:2048'
+        ]);
+
+        $animal = Animal::create([
+            'name' => $request->name,
+            'code' => $code,
+            'slug' => Str::slug($request->name) . '-' . uniqid(),
+            'category_id' => $request->category_id,
+            'age_in_months' => $request->age_in_months,
+            'gender' => $request->gender,
+            'description' => $request->description,
+            'status' => 'available',
+            'created_by' => auth()->id(),
+        ]);
+
+        if ($request->hasFile('images')) {
+
+            foreach ($request->file('images') as $image) {
+
+                $path = $image->store('animals', 'public');
+
+                $animal->images()->create([
+                    'image' => $path
+                ]);
+            }
+        }
+
+        return redirect()
+            ->route('animals.show', $animal->slug)
+            ->with('success', 'Animal successfully posted for adoption.');
     }
 }

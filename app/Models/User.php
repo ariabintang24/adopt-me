@@ -102,4 +102,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Animal::class, 'created_by');
     }
+
+    public function animals()
+    {
+        return $this->hasMany(UserAnimal::class);
+    }
 }

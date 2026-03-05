@@ -19,6 +19,10 @@
                     class="inline-block mt-8 bg-indigo-600 text-white px-6 py-3 rounded-xl shadow hover:bg-indigo-700 transition">
                     Explore Animals
                 </a>
+
+                <a href="{{ route('animals.create') }}" class="bg-indigo-600 text-white px-5 py-3 rounded-xl">
+                    Post Animal
+                </a>
             </div>
 
             <div>
