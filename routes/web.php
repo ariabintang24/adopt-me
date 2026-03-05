@@ -15,9 +15,21 @@ Route::post('/contact', [ContactController::class, 'send'])
 
 Route::prefix('animals')->name('animals.')->group(function () {
 
+    // Public
     Route::get('/', [AnimalController::class, 'index'])
         ->name('index');
 
+    // Auth only
+    Route::middleware('auth')->group(function () {
+
+        Route::get('/create', [AnimalController::class, 'create'])
+            ->name('create');
+
+        Route::post('/', [AnimalController::class, 'store'])
+            ->name('store');
+    });
+
+    // Public (harus paling bawah)
     Route::get('/{slug}', [AnimalController::class, 'show'])
         ->name('show');
 });
@@ -51,6 +63,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/my-favorites', [ProfileController::class, 'myFavorites'])
             ->name('my-favorites');
+
+        Route::get('/my-posts', [ProfileController::class, 'myPosts'])
+            ->name('my-posts');
     });
 });
 
