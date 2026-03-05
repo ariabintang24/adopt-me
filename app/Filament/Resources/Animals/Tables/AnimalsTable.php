@@ -33,7 +33,21 @@ class AnimalsTable
                     ->label('Category')
                     ->sortable(),
 
-                TextColumn::make('age'),
+                TextColumn::make('age_in_months')
+                    ->label('Age')
+                    ->formatStateUsing(function ($state) {
+
+                        if ($state < 12) {
+                            return $state . ' months';
+                        }
+
+                        $years = floor($state / 12);
+                        $months = $state % 12;
+
+                        return $months
+                            ? "$years years $months months"
+                            : "$years years";
+                    }),
 
                 BadgeColumn::make('gender')
                     ->colors([

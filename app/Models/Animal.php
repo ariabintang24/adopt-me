@@ -16,7 +16,7 @@ class Animal extends Model
         'name',
         'slug',
         'category_id',
-        'age',
+        'age_in_months',
         'gender',
         'description',
         'status',
