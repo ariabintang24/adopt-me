@@ -19,7 +19,7 @@ class AnimalController extends Controller
         $ageRange = $request->age_range;
 
         $animals = Animal::query()
-            ->with(['category', 'images'])
+            ->with(['category', 'images', 'createdBy'])
             ->withCount([
                 'favoritedBy as is_favorite' => function ($query) {
                     if (auth()->check()) {

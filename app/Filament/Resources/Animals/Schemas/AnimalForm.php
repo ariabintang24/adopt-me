@@ -2,17 +2,10 @@
 
 namespace App\Filament\Resources\Animals\Schemas;
 
-use Filament\Schemas\Schema;
-
-use Filament\Forms\Components\{
-    TextInput,
-    Select,
-    Textarea,
-    Repeater,
-    FileUpload,
-    Hidden
-};
+use Filament\Forms\Components\{ TextInput, Select, Textarea, Repeater, FileUpload, Hidden };
+use Filament\Forms\Components\Placeholder;
 use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
 
 class AnimalForm
 {
@@ -53,6 +46,10 @@ class AnimalForm
                         'adopted' => 'Adopted',
                     ])
                     ->default('available'),
+
+                Placeholder::make('created_by')
+                    ->label('Created By')
+                    ->content(fn($record) => $record?->createdBy?->name ?? 'Admin'),
 
                 Repeater::make('images')
                     ->relationship()

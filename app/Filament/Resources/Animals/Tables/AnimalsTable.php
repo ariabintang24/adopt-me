@@ -33,21 +33,19 @@ class AnimalsTable
                     ->label('Category')
                     ->sortable(),
 
-                TextColumn::make('age_in_months')
+                TextColumn::make('age_range')
                     ->label('Age')
                     ->formatStateUsing(function ($state) {
 
-                        if ($state < 12) {
-                            return $state . ' months';
-                        }
-
-                        $years = floor($state / 12);
-                        $months = $state % 12;
-
-                        return $months
-                            ? "$years years $months months"
-                            : "$years years";
-                    }),
+                        return match ($state) {
+                            '0-11' => '0 - 11 months',
+                            '1-3'  => '1 - 3 years',
+                            '3-5'  => '3 - 5 years',
+                            '5+'   => '5+ years',
+                            default => '-',
+                        };
+                    })
+                    ->sortable(),
 
                 BadgeColumn::make('gender')
                     ->colors([
@@ -60,6 +58,14 @@ class AnimalsTable
                         'success' => 'available',
                         'danger' => 'adopted',
                     ]),
+
+                TextColumn::make('createdBy.name')
+                    ->label('Created By')
+                    ->badge()
+                    ->color(fn($state) => $state ? 'gray' : 'primary')
+                    ->formatStateUsing(fn($state) => $state ?? 'Admin')
+                    ->sortable()
+                    ->searchable(),
 
                 TextColumn::make('created_at')
                     ->dateTime()
