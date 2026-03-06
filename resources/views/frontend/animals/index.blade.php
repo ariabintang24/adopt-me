@@ -191,7 +191,7 @@
 
             {{-- 🔹 Preserve search & sort --}}
             {{-- Supaya tidak hilang saat apply filter --}}
-            @foreach (request()->except(['category', 'age', 'gender']) as $key => $value)
+            @foreach (request()->except(['category', 'age_range', 'gender']) as $key => $value)
                 <input type="hidden" name="{{ $key }}" value="{{ $value }}">
             @endforeach
 
@@ -216,20 +216,26 @@
             {{-- AGE --}}
             <div>
                 <label class="text-sm text-gray-500">Age</label>
-                <select name="age" class="w-full mt-2 border rounded-xl px-4 py-3">
 
-                    <option value="">-- Choose Age --</option>
+                <select name="age_range" class="w-full mt-2 border rounded-xl px-4 py-3">
 
-                    <option value="0-11" {{ request('age') == '0-11' ? 'selected' : '' }}>
+                    <option value="" disabled {{ request('Age') ? '' : 'selected' }}>
+                        -- Choose Age --
+                    </option>
+                    <option value="0-11" {{ request('age_range') == '0-11' ? 'selected' : '' }}>
                         0 - 11 months
                     </option>
 
-                    <option value="1-2" {{ request('age') == '1-2' ? 'selected' : '' }}>
-                        1 - 2 years
+                    <option value="1-3" {{ request('age_range') == '1-3' ? 'selected' : '' }}>
+                        1 - 3 years
                     </option>
 
-                    <option value="2+" {{ request('age') == '2+' ? 'selected' : '' }}>
-                        2+ years
+                    <option value="3-5" {{ request('age_range') == '3-5' ? 'selected' : '' }}>
+                        3 - 5 years
+                    </option>
+
+                    <option value="5+" {{ request('age_range') == '5+' ? 'selected' : '' }}>
+                        5+ years
                     </option>
 
                 </select>
