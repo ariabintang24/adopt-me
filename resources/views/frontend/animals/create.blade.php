@@ -11,6 +11,17 @@
                     Post Animal for Adoption
                 </h1>
 
+                {{-- ERROR MESSAGE --}}
+                @if ($errors->any())
+                    <div class="bg-red-100 text-red-600 p-4 rounded-xl mb-6 text-sm">
+                        <ul class="list-disc pl-5">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <form action="{{ route('animals.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                     @csrf
 
@@ -55,29 +66,16 @@
                                 Age
                             </label>
 
-                            <div class="flex items-center gap-3">
+                            <select name="age_range"
+                                class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-indigo-500">
 
-                                <input type="number" name="age_years" min="0" placeholder="1"
-                                    class="w-24 border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-indigo-500"
-                                    required>
+                                <option value="">Select age range</option>
+                                <option value="0-11">0 - 11 months</option>
+                                <option value="1-3">1 - 3 years</option>
+                                <option value="3-5">3 - 5 years</option>
+                                <option value="5+">5+ years</option>
 
-                                <span class="text-sm text-gray-500">
-                                    year
-                                </span>
-
-                                <input type="number" name="age_months" min="0" max="11" placeholder="3"
-                                    class="w-24 border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-indigo-500"
-                                    required>
-
-                                <span class="text-sm text-gray-500">
-                                    months
-                                </span>
-
-                            </div>
-
-                            <p class="text-xs text-gray-400 mt-2">
-                                Example: 1 year 3 months
-                            </p>
+                            </select>
 
                         </div>
 
@@ -123,7 +121,7 @@
                             Animal Photos
                         </label>
 
-                        <input type="file" multiple accept="image/*" @change="handleFiles($event)"
+                        <input type="file" name="images[]" multiple accept="image/*" @change="handleFiles($event)"
                             class="w-full border border-gray-300 rounded-xl p-3 bg-white">
 
                         <p class="text-sm text-gray-400">
@@ -195,6 +193,8 @@
                 remove(index) {
 
                     this.files.splice(index, 1);
+                    this.updateInput(document.querySelector('input[type=file]'));
+
 
                 },
 

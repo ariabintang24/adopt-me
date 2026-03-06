@@ -16,7 +16,7 @@ class AnimalController extends Controller
         $sort = $request->sort;
         $category = $request->category;
         $gender = $request->gender;
-        $age = $request->age;
+        $ageRange = $request->age_range;
 
         $animals = Animal::query()
             ->with(['category', 'images'])
@@ -54,15 +54,8 @@ class AnimalController extends Controller
         }
 
         // 🎂 AGE
-        if ($request->filled('age')) {
-
-            if ($request->age === '0-11') {
-                $animals->whereBetween('age_in_months', [0, 11]);
-            } elseif ($request->age === '1-2') {
-                $animals->whereBetween('age_in_months', [12, 24]);
-            } elseif ($request->age === '2+') {
-                $animals->where('age_in_months', '>', 24);
-            }
+        if ($request->filled('age_range')) {
+            $animals->where('age_range', $request->age_range);
         }
 
         // 🔄 SORT
@@ -112,8 +105,8 @@ class AnimalController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'age_years' => 'required|integer|min:0',
-            'age_months' => 'required|integer|min:0|max:11',
+            'age_range' => 'required|in:0-11,1-3,3-5,5+',
+
             'gender' => 'required',
             'description' => 'required',
 
@@ -123,14 +116,14 @@ class AnimalController extends Controller
 
         $code = 'ANM-' . strtoupper(Str::random(5));
 
-        $ageInMonths = ($request->age_years * 12) + $request->age_months;
+        // dd($request->age_years, $request->age_months);
 
         $animal = Animal::create([
             'name' => $request->name,
             'code' => $code,
             'slug' => Str::slug($request->name) . '-' . uniqid(),
             'category_id' => $request->category_id,
-            'age_in_months' => $ageInMonths,
+            'age_range' => $request->age_range,
             'gender' => $request->gender,
             'description' => $request->description,
             'status' => 'available',

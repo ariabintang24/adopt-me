@@ -16,7 +16,7 @@ class Animal extends Model
         'name',
         'slug',
         'category_id',
-        'age_in_months',
+        'age_range',
         'gender',
         'description',
         'status',
@@ -66,20 +66,12 @@ class Animal extends Model
 
     public function getAgeAttribute()
     {
-        $months = $this->age_in_months;
-
-        $years = floor($months / 12);
-        $remainingMonths = $months % 12;
-
-        if ($years > 0 && $remainingMonths > 0) {
-            return $years . ' year' . ($years > 1 ? 's' : '') . ' ' .
-                $remainingMonths . ' month' . ($remainingMonths > 1 ? 's' : '');
-        }
-
-        if ($years > 0) {
-            return $years . ' year' . ($years > 1 ? 's' : '');
-        }
-
-        return $remainingMonths . ' month' . ($remainingMonths > 1 ? 's' : '');
+        return match ($this->age_range) {
+            '0-11' => '0–11 months',
+            '1-3'  => '1–3 years',
+            '3-5'  => '3–5 years',
+            '5+'   => '5+ years',
+            default => '-',
+        };
     }
 }
