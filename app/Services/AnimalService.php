@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Interfaces\AnimalRepositoryInterface;
 use App\Models\Animal;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AnimalService
@@ -82,7 +83,55 @@ class AnimalService
             abort(403);
         }
 
-        $animal->update($data);
+        /*
+    =====================
+    UPDATE MAIN DATA
+    =====================
+    */
+
+        $animal->update([
+            'name' => $data['name'],
+            'category_id' => $data['category_id'],
+            'age_range' => $data['age_range'],
+            'gender' => $data['gender'],
+            'description' => $data['description'],
+        ]);
+
+        /*
+    =====================
+    HANDLE OLD IMAGES
+    =====================
+    */
+
+        $existingImages = $data['existing_images'] ?? [];
+
+        $animal->images()
+            ->whereNotIn('id', $existingImages)
+            ->get()
+            ->each(function ($image) {
+
+                Storage::disk('public')->delete($image->image);
+
+                $image->delete();
+            });
+
+        /*
+    =====================
+    HANDLE NEW IMAGES
+    =====================
+    */
+
+        if (!empty($data['images'])) {
+
+            foreach ($data['images'] as $file) {
+
+                $path = $file->store('animals', 'public');
+
+                $animal->images()->create([
+                    'image' => $path
+                ]);
+            }
+        }
 
         return $animal;
     }

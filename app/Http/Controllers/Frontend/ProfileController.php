@@ -98,20 +98,15 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
-            'age_in_months' => 'required|integer|min:0',
+            'age_range' => 'required|in:0-11,1-3,3-5,5+',
             'gender' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'images.*' => 'image|max:2048'
         ]);
 
         $this->animalService->updateUserPost(
             $animal,
-            $request->only([
-                'name',
-                'category_id',
-                'age_in_months',
-                'gender',
-                'description'
-            ]),
+            $request->all(),
             auth()->id()
         );
 
