@@ -104,7 +104,52 @@
 
                     </div>
 
+                    {{-- ================= MY POSTS ================= --}}
+                    <section class="mt-16">
 
+                        <div class="bg-white rounded-3xl shadow-md p-8 mt-8">
+
+                            <div class="flex justify-between items-center mb-6">
+
+                                <h2 class="text-xl font-bold">
+                                    My Posts
+                                </h2>
+
+                                <a href="{{ route('profile.my-posts') }}" class="text-indigo-600 font-medium">
+                                    View all →
+                                </a>
+
+                            </div>
+
+
+                            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+                                @forelse($myPosts as $animal)
+                                    @include('frontend.components.animal-card-compact', [
+                                        'animal' => $animal,
+                                    ])
+
+                                @empty
+
+                                    <div class="col-span-full text-center py-6">
+
+                                        <p class="text-gray-500 text-sm mb-3">
+                                            You haven't posted any animals yet 🐾
+                                        </p>
+
+                                        <a href="{{ route('animals.create') }}"
+                                            class="inline-block text-sm bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                            Post Animal
+                                        </a>
+
+                                    </div>
+                                @endforelse
+
+                            </div>
+
+                        </div>
+
+                    </section>
 
                     {{-- ================= ADOPTION HISTORY ================= --}}
                     <div class="bg-white rounded-3xl shadow-md p-8">
@@ -115,8 +160,7 @@
                                 My Adoption History
                             </h2>
 
-                            <a href="{{ route('profile.my-adoptions') }}"
-                                class="text-indigo-600 font-medium">
+                            <a href="{{ route('profile.my-adoptions') }}" class="text-indigo-600 font-medium">
                                 View all →
                             </a>
 
@@ -177,8 +221,7 @@
                                 My Favorites
                             </h2>
 
-                            <a href="{{ route('profile.my-favorites') }}"
-                                class="text-indigo-600 font-medium">
+                            <a href="{{ route('profile.my-favorites') }}" class="text-indigo-600 font-medium">
                                 View all →
                             </a>
 
