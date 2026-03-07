@@ -65,6 +65,12 @@
                             {{ $animal->name }}
                         </h1>
 
+                        {{-- ERROR MESSAGE
+                        @if (session('error'))
+                            <div class="bg-red-100 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm">
+                                {{ session('error') }}
+                            </div>
+                        @endif --}}
 
                         {{-- DESCRIPTION --}}
                         <div class="text-gray-700 text-sm md:text-base leading-relaxed mb-6">
@@ -109,16 +115,22 @@
                                 {{ $animal->created_at->format('d M Y') }}
                             </span>
 
+                            <span class="text-gray-500">Posted By</span>
+                            <span class="font-medium text-right">
+                                {{ $animal->createdBy ? $animal->createdBy->name : 'Admin' }}
+                            </span>
                         </div>
 
 
                         {{-- ADOPT BUTTON --}}
-                        <a href="{{ route('adoption.create', $animal->id) }}"
-                            class="mt-auto bg-indigo-600 text-white px-6 py-3 rounded-xl
-                              text-sm font-semibold text-center
-                              hover:bg-indigo-700 transition shadow-md">
-                            Adopt Me 🐾
-                        </a>
+                        @if (auth()->check())
+                            <a href="{{ route('adoption.create', $animal->id) }}"
+                                class="mt-auto bg-indigo-600 text-white px-6 py-3 rounded-xl
+               text-sm font-semibold text-center
+               hover:bg-indigo-700 transition shadow-md">
+                                Adopt Me 🐾
+                            </a>
+                        @endif
 
                     </div>
 
