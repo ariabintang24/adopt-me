@@ -22,8 +22,7 @@
             })
             .finally(() => this.loading = false)
     }
-}"
-    class="relative group bg-white rounded-2xl shadow transition overflow-hidden">
+}" class="relative group bg-white rounded-2xl shadow transition overflow-hidden">
 
     {{-- ❤️ Remove Favorite --}}
     <button type="button" @click.prevent.stop="toggle()"
@@ -34,31 +33,30 @@
         </svg>
     </button>
 
-    <a href="{{ route('animals.show', $animal->slug) }}">
 
-        {{-- IMAGE (KOTAK) --}}
-        <div class="aspect-square overflow-hidden">
-            @php $image = optional($animal->images)->first(); @endphp
+    {{-- IMAGE (KOTAK) --}}
+    <div class="aspect-square overflow-hidden">
+        @php $image = optional($animal->images)->first(); @endphp
 
-            <img src="{{ $image ? asset('storage/' . $image->image) : asset('images/no-data.png') }}"
-                class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                alt="{{ $animal->name }}">
-        </div>
+        <img src="{{ $image ? asset('storage/' . $image->image) : asset('images/no-data.png') }}"
+            class="w-full h-full object-cover transition duration-500 group-hover:scale-105" alt="{{ $animal->name }}">
+    </div>
 
-        {{-- CONTENT (COMPACT) --}}
-        <div class="p-4 flex flex-col min-h-[120px]">
+    {{-- CONTENT (COMPACT) --}}
+    <div class="p-4 flex flex-col min-h-[120px]">
 
-            <h3 class="text-base font-semibold text-gray-800 line-clamp-2 break-words">
+        <h3 class="text-base font-semibold text-gray-800 line-clamp-2 break-words">
+            <a href="{{ route('animals.show', $animal->slug) }}" class="hover:text-indigo-600 transition">
                 {{ $animal->name }}
-            </h3>
+            </a>
+        </h3>
 
-            <span
-                class="mt-auto inline-block w-fit
+        <span
+            class="mt-auto inline-block w-fit
         {{ $animal->status === 'available' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}
         text-xs font-medium px-3 py-1 rounded-full">
-                {{ ucfirst($animal->status) }}
-            </span>
+            {{ ucfirst($animal->status) }}
+        </span>
 
-        </div>
-    </a>
+    </div>
 </div>

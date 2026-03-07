@@ -45,8 +45,7 @@
         </svg>
     </button>
 
-    <a href="{{ route('animals.show', $animal->slug) }}"
-        class="block bg-white rounded-2xl shadow-sm overflow-hidden transition">
+    <div class="block bg-white rounded-2xl shadow-sm overflow-hidden transition">
 
         {{-- IMAGE --}}
         <div class="overflow-hidden">
@@ -66,7 +65,9 @@
             </div>
 
             <h3 class="text-lg font-semibold text-gray-800 line-clamp-2">
-                {{ $animal->name }}
+                <a href="{{ route('animals.show', $animal->slug) }}" class="hover:text-indigo-600 transition">
+                    {{ $animal->name }}
+                </a>
             </h3>
 
             <p class="text-sm text-gray-500 mt-1">
@@ -83,5 +84,5 @@
             </div>
 
         </div>
-    </a>
+    </div>
 </div>
