@@ -14,8 +14,15 @@
 
                         <div class="text-center">
 
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}"
-                                class="w-24 h-24 rounded-full mx-auto mb-4">
+                            @if (auth()->user()->avatar)
+                                <img src="{{ asset('storage/' . auth()->user()->avatar) }}"
+                                    class="w-24 h-24 rounded-full object-cover mx-auto">
+                            @else
+                                <div
+                                    class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-xl font-semibold">
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
+                                </div>
+                            @endif
 
                             <h2 class="text-lg font-semibold">
                                 {{ $user->name }}
@@ -30,17 +37,17 @@
 
                         <div class="space-y-4 text-sm">
 
-                            <div class="bg-gray-50 rounded-xl p-3">
+                            <div class="bg-whiterounded-xl p-3">
                                 <p class="text-gray-400 text-xs">Email</p>
                                 <p class="font-medium">{{ $user->email }}</p>
                             </div>
 
-                            <div class="bg-gray-50 rounded-xl p-3">
+                            <div class="bg-white rounded-xl p-3">
                                 <p class="text-gray-400 text-xs">Phone</p>
                                 <p class="font-medium">{{ $user->phone ?? '-' }}</p>
                             </div>
 
-                            <div class="bg-gray-50 rounded-xl p-3">
+                            <div class="bg-white rounded-xl p-3">
                                 <p class="text-gray-400 text-xs">Address</p>
                                 <p class="font-medium">{{ $user->address ?? '-' }}</p>
                             </div>
