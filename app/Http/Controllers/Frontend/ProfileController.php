@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
 use App\Models\AdoptionRequest;
 use App\Models\Animal;
 use App\Models\Category;
 use App\Services\AnimalService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -134,5 +134,66 @@ class ProfileController extends Controller
         $categories = Category::all();
 
         return view('frontend.profile.edit-post', compact('animal', 'categories'));
+    }
+
+    public function edit()
+    {
+        $user = auth()->user();
+
+        return view('frontend.profile.edit', compact('user'));
+    }
+
+    public function update(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'avatar' => 'nullable|image|max:2048',
+        ]);
+
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $path;
+        }
+
+        $user->update([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+
+        return redirect()->route('profile.index')
+            ->with('success', 'Profile updated successfully.');
+    }
+
+    public function password()
+    {
+        return view('frontend.profile.password');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required'],
+            'password' => ['required', 'confirmed', 'min:8'],
+        ]);
+
+        $user = auth()->user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors([
+                'current_password' => 'Current password is incorrect.'
+            ]);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        return redirect()->route('profile.index')
+            ->with('success', 'Password updated successfully.');
     }
 }
