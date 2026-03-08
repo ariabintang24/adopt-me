@@ -58,6 +58,20 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/', [ProfileController::class, 'index'])->name('index');
 
+        // EDIT PROFILE
+        Route::get('/edit', [ProfileController::class, 'edit'])
+            ->name('edit');
+
+        Route::put('/update', [ProfileController::class, 'update'])
+            ->name('update');
+
+        // CHANGE PASSWORD
+        Route::get('/password', [ProfileController::class, 'password'])
+            ->name('password');
+
+        Route::put('/password', [ProfileController::class, 'updatePassword'])
+            ->name('password.update');
+
         Route::get('/my-adoptions', [ProfileController::class, 'myAdoptions'])
             ->name('my-adoptions');
 
