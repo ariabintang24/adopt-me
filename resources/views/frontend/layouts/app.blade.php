@@ -90,7 +90,7 @@
         @yield('content')
     </main>
 
-    @include('frontend.components.footer')
+    {{-- @include('frontend.components.footer') --}}
 
     <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 

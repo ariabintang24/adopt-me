@@ -272,4 +272,7 @@
             </a>
         </form>
     </div>
+
+    @include('frontend.components.footer')
+    
 @endsection

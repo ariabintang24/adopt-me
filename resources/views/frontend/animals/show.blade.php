@@ -142,4 +142,6 @@
 
     </section>
 
+    @include('frontend.components.footer')
+
 @endsection
