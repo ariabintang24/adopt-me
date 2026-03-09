@@ -7,28 +7,30 @@
             {{-- HEADER --}}
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-10 gap-6">
 
-                <div>
-                    <h1 class="text-2xl md:text-3xl font-bold">
-                        My Animal Posts
-                    </h1>
+                @include('frontend.components.profile-header', [
+        'title' => 'My Animal Posts',
+        'subtitle' => 'Manage animals you have posted for adoption',
+        'back' => route('profile.index')
+    ])
 
-                    <p class="text-gray-500 mt-1">
-                        Manage animals you have posted for adoption
-                    </p>
-                </div>
+    <a href="{{ route('animals.create') }}"
+       class="self-start inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-3 rounded-xl shadow hover:bg-indigo-700 transition">
 
-                <a href="{{ route('animals.create') }}"
-                    class="self-start inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-3 rounded-xl shadow hover:bg-indigo-700 transition">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="w-5 h-5"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor">
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4v16m8-8H4"/>
 
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
 
-                    </svg>
-
-                    Post Animal
-                </a>
+        Post Animal
+    </a>
 
             </div>
 
@@ -84,48 +86,61 @@
                                 <div class="flex items-center gap-2">
 
                                     {{-- EDIT --}}
-                                    <a href="{{ route('profile.posts.edit', $animal->id) }}"
-                                        class="w-9 h-9 flex items-center justify-center
-                           rounded-lg bg-blue-100 hover:bg-blue-200 transition">
+                                    <div class="relative group">
 
-                                        <svg class="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2">
+                                        <a href="{{ route('profile.posts.edit', $animal->id) }}"
+                                            class="w-9 h-9 flex items-center justify-center
+           rounded-lg bg-blue-100 hover:bg-blue-200 transition">
 
-                                            <path d="M3 17.25V21h3.75L17.81 9.94
-                                        l-3.75-3.75L3 17.25z" />
-                                            <path d="M14.06 4.94l3.75 3.75" />
+                                            <img src="{{ asset('images/icons/edit.png') }}"
+                                                class="w-4 h-4">
 
-                                        </svg>
+                                        </a>
 
-                                    </a>
+                                        <!-- TOOLTIP -->
+                                        <span
+                                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2
+                   bg-gray-800 text-white text-xs px-2 py-1 rounded
+                   opacity-0 group-hover:opacity-100 transition
+                   pointer-events-none whitespace-nowrap">
+
+                                            Edit
+
+                                        </span>
+
+                                    </div>
 
 
                                     {{-- DELETE --}}
-                                    <div x-data="{ open: false }">
+                                    <div x-data="{ open: false }" class="relative group">
 
                                         <button type="button" @click="open=true"
                                             class="w-9 h-9 flex items-center justify-center
-                                rounded-lg bg-red-100 hover:bg-red-200 transition">
+            rounded-lg bg-red-100 hover:bg-red-200 transition">
 
-                                            <svg class="w-4 h-4 text-red-600" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2">
-
-                                                <path d="M3 6h18" />
-                                                <path d="M8 6V4h8v2" />
-                                                <path d="M6 6l1 14h10l1-14" />
-                                                <path d="M10 11v6" />
-                                                <path d="M14 11v6" />
-
-                                            </svg>
+                                            <img src="{{ asset('images/icons/delete.png') }}"
+                                                class="w-4 h-4">
 
                                         </button>
 
+                                        <!-- TOOLTIP -->
+                                        <span
+                                            class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2
+                   bg-gray-800 text-white text-xs px-2 py-1 rounded
+                   opacity-0 group-hover:opacity-100 transition
+                   pointer-events-none whitespace-nowrap">
+
+                                            Delete
+
+                                        </span>
+
 
                                         {{-- MODAL DELETE --}}
-                                        <div x-show="open" x-transition
-                                            class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+                                        <div x-show="open" x-transition @click.outside="open=false"
+                                            class="fixed inset-0 flex items-center justify-center
+                   bg-black/40 backdrop-blur-sm z-50">
 
-                                            <div class="bg-white rounded-xl shadow-xl p-6 w-80">
+                                            <div class="bg-white rounded-2xl shadow-xl p-6 w-80">
 
                                                 <h3 class="text-lg font-semibold mb-2">
                                                     Delete Post
@@ -149,7 +164,7 @@
                                                         @method('DELETE')
 
                                                         <button
-                                                            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                                            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
                                                             Delete
                                                         </button>
 
