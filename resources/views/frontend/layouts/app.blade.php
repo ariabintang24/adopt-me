@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adopt Me</title>
 
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('logo-adoptme.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('logo-adoptme.png') }}">
+    <link rel="shortcut icon" href="{{ asset('logo-adoptme.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo-adoptme.png') }}">
+
     {{-- GLightbox CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
 
