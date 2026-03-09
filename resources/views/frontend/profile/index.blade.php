@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <div x-data="{ showLogout: false, showMenu: false }" class="bg-gray-50 py-12">
+    <div x-data="{ showLogout: false, showMenu: false, loading: true }" x-init="setTimeout(() => loading = false, 600)" class="bg-gray-50 py-12">
         <div class="max-w-7xl mx-auto px-6">
 
             <div class="grid lg:grid-cols-3 gap-10">
@@ -10,116 +10,163 @@
                 {{-- ================= LEFT PROFILE CARD ================= --}}
                 <div>
 
-                    <div class="bg-white rounded-3xl shadow-md p-8 relative">
+                    {{-- ================= SKELETON PROFILE (ADDED) ================= --}}
+                    <template x-if="loading">
+                        <div class="bg-white rounded-3xl shadow-md p-8 animate-pulse">
 
-                        <div class="absolute top-5 right-5">
+                            <div class="text-center">
 
-                            <div class="relative group">
+                                {{-- avatar skeleton --}}
+                                <div class="w-24 h-24 rounded-full bg-gray-200 mx-auto"></div>
 
-                                <!-- SETTINGS BUTTON -->
-                                <button @click="showMenu = !showMenu" class="p-2 rounded-full hover:bg-gray-100 transition">
+                                {{-- name skeleton --}}
+                                <div class="h-4 bg-gray-200 rounded w-32 mx-auto mt-4"></div>
 
-                                    <img src="{{ asset('images/icons/settings.png') }}" class="w-5 h-5 transition">
-                                </button>
+                                {{-- member since skeleton --}}
+                                <div class="h-3 bg-gray-200 rounded w-24 mx-auto mt-2 mb-6"></div>
 
-                                <!-- SIMPLE LABEL -->
-                                <span
-                                    class="absolute bottom-full right-1/2 translate-x-1/2 mb-2
+                            </div>
+
+                            <div class="space-y-4">
+
+                                <div class="bg-gray-50 rounded-xl p-3">
+                                    <div class="h-3 w-16 bg-gray-200 rounded mb-2"></div>
+                                    <div class="h-4 w-40 bg-gray-200 rounded"></div>
+                                </div>
+
+                                <div class="bg-gray-50 rounded-xl p-3">
+                                    <div class="h-3 w-16 bg-gray-200 rounded mb-2"></div>
+                                    <div class="h-4 w-32 bg-gray-200 rounded"></div>
+                                </div>
+
+                                <div class="bg-gray-50 rounded-xl p-3">
+                                    <div class="h-3 w-16 bg-gray-200 rounded mb-2"></div>
+                                    <div class="h-4 w-48 bg-gray-200 rounded"></div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </template>
+
+                    {{-- ================= PROFILE CARD ASLI ================= --}}
+                    {{-- ADDED: hanya tampil jika loading selesai --}}
+                    <div x-show="!loading" x-cloak>
+
+                        <div class="bg-white rounded-3xl shadow-md p-8 relative">
+
+                            <div class="absolute top-5 right-5">
+
+                                <div class="relative group">
+
+                                    <!-- SETTINGS BUTTON -->
+                                    <button @click="showMenu = !showMenu"
+                                        class="p-2 rounded-full hover:bg-gray-100 transition">
+
+                                        <img src="{{ asset('images/icons/settings.png') }}" class="w-5 h-5 transition">
+                                    </button>
+
+                                    <!-- SIMPLE LABEL -->
+                                    <span
+                                        class="absolute bottom-full right-1/2 translate-x-1/2 mb-2
                    bg-gray-800 text-white text-xs px-2 py-1 rounded
                    opacity-0 group-hover:opacity-100
                    transition pointer-events-none whitespace-nowrap">
 
-                                    Settings
+                                        Settings
 
-                                </span>
-
-
-                                <!-- DROPDOWN -->
-                                <div x-show="showMenu" @click.outside="showMenu = false" x-transition
-                                    class="absolute right-0 mt-2 w-52 bg-white border border-gray-100 rounded-xl shadow-lg py-2">
-
-                                    <!-- EDIT PROFILE -->
-                                    <a href="{{ route('profile.edit') }}"
-                                        class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 transition">
-
-                                        <img src="{{ asset('images/icons/edit-profile.png') }}" class="w-5 h-5">
-
-                                        Edit Profile
-                                    </a>
+                                    </span>
 
 
-                                    <!-- CHANGE PASSWORD -->
-                                    <a href="{{ route('profile.password') }}"
-                                        class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 transition">
+                                    <!-- DROPDOWN -->
+                                    <div x-show="showMenu" @click.outside="showMenu = false" x-transition
+                                        class="absolute right-0 mt-2 w-52 bg-white border border-gray-100 rounded-xl shadow-lg py-2">
 
-                                        <img src="{{ asset('images/icons/change-password.png') }}" class="w-5 h-5">
+                                        <!-- EDIT PROFILE -->
+                                        <a href="{{ route('profile.edit') }}"
+                                            class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 transition">
 
-                                        Change Password
-                                    </a>
+                                            <img src="{{ asset('images/icons/edit-profile.png') }}" class="w-5 h-5">
+
+                                            Edit Profile
+                                        </a>
 
 
-                                    <!-- DIVIDER -->
-                                    <div class="my-2 border-t border-gray-200"></div>
+                                        <!-- CHANGE PASSWORD -->
+                                        <a href="{{ route('profile.password') }}"
+                                            class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 transition">
+
+                                            <img src="{{ asset('images/icons/change-password.png') }}" class="w-5 h-5">
+
+                                            Change Password
+                                        </a>
 
 
-                                    <!-- LOGOUT -->
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
+                                        <!-- DIVIDER -->
+                                        <div class="my-2 border-t border-gray-200"></div>
 
-                                        <button
-                                            class="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-red-50 transition">
 
-                                            <img src="{{ asset('images/icons/logout.png') }}" class="w-4 h-4 opacity-80">
+                                        <!-- LOGOUT -->
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
 
-                                            Logout
-                                        </button>
-                                    </form>
+                                            <button
+                                                class="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-red-50 transition">
+
+                                                <img src="{{ asset('images/icons/logout.png') }}"
+                                                    class="w-4 h-4 opacity-80">
+
+                                                Logout
+                                            </button>
+                                        </form>
+
+                                    </div>
 
                                 </div>
 
                             </div>
 
-                        </div>
+
+                            <div class="text-center">
+
+                                @if ($user->avatar)
+                                    <img src="{{ asset('storage/' . $user->avatar) }}"
+                                        class="w-24 h-24 rounded-full object-cover mx-auto">
+                                @else
+                                    <div
+                                        class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-xl font-semibold mx-auto">
+                                        {{ strtoupper(substr($user->name, 0, 2)) }}
+                                    </div>
+                                @endif
+
+                                <h2 class="text-lg font-semibold mt-3">
+                                    {{ $user->name }}
+                                </h2>
+
+                                <p class="text-sm text-gray-400 mb-6">
+                                    Member since {{ $user->created_at->format('M Y') }}
+                                </p>
+
+                            </div>
 
 
-                        <div class="text-center">
+                            <div class="space-y-4 text-sm">
 
-                            @if ($user->avatar)
-                                <img src="{{ asset('storage/' . $user->avatar) }}"
-                                    class="w-24 h-24 rounded-full object-cover mx-auto">
-                            @else
-                                <div
-                                    class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-xl font-semibold mx-auto">
-                                    {{ strtoupper(substr($user->name, 0, 2)) }}
+                                <div class="bg-white rounded-xl p-3">
+                                    <p class="text-gray-400 text-xs">Email</p>
+                                    <p class="font-medium">{{ $user->email }}</p>
                                 </div>
-                            @endif
 
-                            <h2 class="text-lg font-semibold mt-3">
-                                {{ $user->name }}
-                            </h2>
+                                <div class="bg-white rounded-xl p-3">
+                                    <p class="text-gray-400 text-xs">Phone</p>
+                                    <p class="font-medium">{{ $user->phone ?? '-' }}</p>
+                                </div>
 
-                            <p class="text-sm text-gray-400 mb-6">
-                                Member since {{ $user->created_at->format('M Y') }}
-                            </p>
+                                <div class="bg-white rounded-xl p-3">
+                                    <p class="text-gray-400 text-xs">Address</p>
+                                    <p class="font-medium">{{ $user->address ?? '-' }}</p>
+                                </div>
 
-                        </div>
-
-
-                        <div class="space-y-4 text-sm">
-
-                            <div class="bg-white rounded-xl p-3">
-                                <p class="text-gray-400 text-xs">Email</p>
-                                <p class="font-medium">{{ $user->email }}</p>
-                            </div>
-
-                            <div class="bg-white rounded-xl p-3">
-                                <p class="text-gray-400 text-xs">Phone</p>
-                                <p class="font-medium">{{ $user->phone ?? '-' }}</p>
-                            </div>
-
-                            <div class="bg-white rounded-xl p-3">
-                                <p class="text-gray-400 text-xs">Address</p>
-                                <p class="font-medium">{{ $user->address ?? '-' }}</p>
                             </div>
 
                         </div>
@@ -133,9 +180,31 @@
                 {{-- ================= RIGHT CONTENT ================= --}}
                 <div class="lg:col-span-2 space-y-10">
 
+                    {{-- ================= SKELETON STATISTICS (ADDED) ================= --}}
+                    <template x-if="loading">
+                        <div class="grid grid-cols-3 gap-3 md:gap-6">
+
+                            <div class="bg-white p-4 md:p-6 rounded-2xl shadow text-center animate-pulse">
+                                <div class="h-6 w-10 bg-gray-200 rounded mx-auto mb-2"></div>
+                                <div class="h-3 w-16 bg-gray-200 rounded mx-auto"></div>
+                            </div>
+
+                            <div class="bg-white p-4 md:p-6 rounded-2xl shadow text-center animate-pulse">
+                                <div class="h-6 w-10 bg-gray-200 rounded mx-auto mb-2"></div>
+                                <div class="h-3 w-16 bg-gray-200 rounded mx-auto"></div>
+                            </div>
+
+                            <div class="bg-white p-4 md:p-6 rounded-2xl shadow text-center animate-pulse">
+                                <div class="h-6 w-10 bg-gray-200 rounded mx-auto mb-2"></div>
+                                <div class="h-3 w-16 bg-gray-200 rounded mx-auto"></div>
+                            </div>
+
+                        </div>
+                    </template>
+
 
                     {{-- ================= STATISTICS ================= --}}
-                    <div class="grid grid-cols-3 gap-3 md:gap-6">
+                    <div x-show="!loading" x-cloak class="grid grid-cols-3 gap-3 md:gap-6">
 
                         <div class="bg-white p-4 md:p-6 rounded-2xl shadow text-center">
 
@@ -176,7 +245,7 @@
                     </div>
 
                     {{-- ================= ADOPTION HISTORY ================= --}}
-                    <div class="bg-white rounded-3xl shadow-md p-8">
+                    <div x-show="!loading" x-cloak class="bg-white rounded-3xl shadow-md p-8">
 
                         <div class="flex justify-between items-center mb-6">
 
@@ -237,43 +306,79 @@
                     {{-- ================= MY POSTS ================= --}}
                     <section class="mt-16">
 
-                        <div class="bg-white rounded-3xl shadow-md p-8 mt-8">
+                        {{-- ================= SKELETON MY POSTS (ADDED) ================= --}}
+                        <template x-if="loading">
+                            <div class="bg-white rounded-3xl shadow-md p-8 mt-8 animate-pulse">
 
-                            <div class="flex justify-between items-center mb-6">
+                                <div class="flex justify-between items-center mb-6">
 
-                                <h2 class="text-xl font-bold">
-                                    My Posts
-                                </h2>
+                                    <div class="h-5 w-32 bg-gray-200 rounded"></div>
+                                    <div class="h-4 w-16 bg-gray-200 rounded"></div>
 
-                                <a href="{{ route('profile.my-posts') }}" class="text-indigo-600 font-medium">
-                                    View all
-                                </a>
+                                </div>
+
+                                <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+                                    {{-- card skeleton --}}
+                                    @for ($i = 0; $i < 3; $i++)
+                                        <div class="bg-gray-50 rounded-2xl p-3">
+
+                                            <div class="w-full h-40 bg-gray-200 rounded-xl mb-3"></div>
+
+                                            <div class="space-y-2">
+                                                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                                <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+                                            </div>
+
+                                        </div>
+                                    @endfor
+
+                                </div>
 
                             </div>
+                        </template>
+
+                        <div x-show="!loading" x-cloak>
+
+                            <div class="bg-white rounded-3xl shadow-md p-8 mt-8">
+
+                                <div class="flex justify-between items-center mb-6">
+
+                                    <h2 class="text-xl font-bold">
+                                        My Posts
+                                    </h2>
+
+                                    <a href="{{ route('profile.my-posts') }}" class="text-indigo-600 font-medium">
+                                        View all
+                                    </a>
+
+                                </div>
 
 
-                            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                                <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
 
-                                @forelse($myPosts as $animal)
-                                    @include('frontend.components.animal-card-compact', [
-                                        'animal' => $animal,
-                                    ])
+                                    @forelse($myPosts as $animal)
+                                        @include('frontend.components.animal-card-compact', [
+                                            'animal' => $animal,
+                                        ])
 
-                                @empty
+                                    @empty
 
-                                    <div class="col-span-full text-center py-6">
+                                        <div class="col-span-full text-center py-6">
 
-                                        <p class="text-gray-500 text-sm mb-3">
-                                            You haven't posted any animals yet 🐾
-                                        </p>
+                                            <p class="text-gray-500 text-sm mb-3">
+                                                You haven't posted any animals yet 🐾
+                                            </p>
 
-                                        <a href="{{ route('animals.create') }}"
-                                            class="inline-block text-sm bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
-                                            Post Animal
-                                        </a>
+                                            <a href="{{ route('animals.create') }}"
+                                                class="inline-block text-sm bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                                Post Animal
+                                            </a>
 
-                                    </div>
-                                @endforelse
+                                        </div>
+                                    @endforelse
+
+                                </div>
 
                             </div>
 
@@ -282,34 +387,72 @@
                     </section>
 
                     {{-- ================= FAVORITES ================= --}}
-                    <div class="bg-white rounded-3xl shadow-md p-8">
 
-                        <div class="flex justify-between items-center mb-6">
+                    {{-- ================= FAVORITES Skeleton================= --}}
 
-                            <h2 class="text-xl font-bold">
-                                My Favorites
-                            </h2>
+                    <template x-if="loading">
+                        <div class="bg-white rounded-3xl shadow-md p-8 animate-pulse">
 
-                            <a href="{{ route('profile.my-favorites') }}" class="text-indigo-600 font-medium">
-                                View all
-                            </a>
+                            <div class="flex justify-between items-center mb-6">
+
+                                <div class="h-5 w-32 bg-gray-200 rounded"></div>
+                                <div class="h-4 w-16 bg-gray-200 rounded"></div>
+
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+                                @for ($i = 0; $i < 3; $i++)
+                                    <div class="bg-gray-50 rounded-2xl p-3">
+
+                                        <div class="w-full h-40 bg-gray-200 rounded-xl mb-3"></div>
+
+                                        <div class="space-y-2">
+                                            <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                                            <div class="h-3 bg-gray-200 rounded w-1/2"></div>
+                                        </div>
+
+                                    </div>
+                                @endfor
+
+                            </div>
 
                         </div>
+                    </template>
+
+                    {{-- ================= FAVORITES ASLI ================= --}}
+
+                    <div x-show="!loading" x-cloak>
+                        <div class="bg-white rounded-3xl shadow-md p-8">
+
+                            <div class="flex justify-between items-center mb-6">
+
+                                <h2 class="text-xl font-bold">
+                                    My Favorites
+                                </h2>
+
+                                <a href="{{ route('profile.my-favorites') }}" class="text-indigo-600 font-medium">
+                                    View all
+                                </a>
+
+                            </div>
 
 
-                        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
 
-                            @forelse($favorites as $animal)
-                                @include('frontend.components.animal-card-compact', [
-                                    'animal' => $animal,
-                                ])
+                                @forelse($favorites as $animal)
+                                    @include('frontend.components.animal-card-compact', [
+                                        'animal' => $animal,
+                                    ])
 
-                            @empty
+                                @empty
 
-                                <p class="text-gray-500 text-sm">
-                                    No favorites yet 🐾
-                                </p>
-                            @endforelse
+                                    <p class="text-gray-500 text-sm">
+                                        No favorites yet 🐾
+                                    </p>
+                                @endforelse
+
+                            </div>
 
                         </div>
 
@@ -368,4 +511,10 @@
         </div>
 
         </section>
+
+        <style>
+            [x-cloak] {
+                display: none !important;
+            }
+        </style>
     @endsection
