@@ -5,11 +5,11 @@
 
         <div class="bg-white rounded-3xl shadow-md p-10">
 
-            <x-breadcrumb current="Change Password" />
-
-            <h1 class="text-2xl font-semibold text-gray-700 mb-8">
-                Change Password
-            </h1>
+            @include('frontend.components.profile-header', [
+                'title' => 'Change Password',
+                'subtitle' => 'Update your password here',
+                'back' => route('profile.index'),
+            ])
 
             <form method="POST" action="{{ route('profile.password.update') }}">
                 @csrf
@@ -76,11 +76,11 @@
                     <div class="flex gap-4 pt-4">
 
                         <a href="{{ route('profile.index') }}"
-                            class="px-6 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition">
+                            class="px-6 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition whitespace-nowrap">
                             Cancel
                         </a>
 
-                        <button class="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition">
+                        <button class="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition whitespace-nowrap">
                             Update Password
                         </button>
 
