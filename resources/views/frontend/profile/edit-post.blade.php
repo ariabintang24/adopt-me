@@ -8,9 +8,10 @@
 
             <div class="bg-white rounded-3xl shadow-md p-10">
 
-                <h1 class="text-3xl font-bold mb-10 text-center">
-                    Edit Animal Post
-                </h1>
+                @include('frontend.components.profile-header', [
+                    'title' => 'Edit Animal Post',
+                    'back' => route('profile.my-posts'),
+                ])
 
                 {{-- ERROR MESSAGE --}}
                 @if ($errors->any())
