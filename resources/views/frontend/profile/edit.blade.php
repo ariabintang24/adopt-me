@@ -5,11 +5,11 @@
 
         <div class="bg-white rounded-3xl shadow-md p-10">
 
-            <x-breadcrumb current="Edit Profile" />
-
-            <h1 class="text-2xl font-semibold text-gray-700 mb-8">
-                Edit Profile
-            </h1>
+            @include('frontend.components.profile-header', [
+                'title' => 'Edit Profile',
+                'subtitle' => 'Update your account information',
+                'back' => route('profile.index'),
+            ])
 
             <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                 @csrf
