@@ -97,8 +97,6 @@
     <!-- DIVIDER -->
     <div class="border-t border-gray-300 mt-12 pt-6 text-center text-sm text-gray-500">
         © {{ date('Y') }} AdoptMe. All rights reserved.
-        <br>
-        Dibuat dengan ❤️ untuk para pecinta hewan
     </div>
 
 </footer>

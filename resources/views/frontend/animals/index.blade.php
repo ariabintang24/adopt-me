@@ -7,6 +7,9 @@
             {{-- ================= HEADER CONTROL BAR ================= --}}
             <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-10 gap-6">
 
+                <h2 class="text-2xl md:text-3xl font-bold leading-tight">
+                    Available Animals
+                </h2>
 
                 <div class="flex items-center gap-3 w-full md:w-auto">
 

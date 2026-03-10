@@ -86,7 +86,7 @@
 
                         <div class="grid grid-cols-2 gap-y-4 text-sm mb-8">
 
-                            <span class="text-gray-500">Status</span>
+                            <span class="text-gray-700">Status</span>
                             <span class="text-right">
                                 <span
                                     class="px-3 py-1 rounded-full text-xs font-medium
@@ -95,26 +95,42 @@
                                 </span>
                             </span>
 
-                            <span class="text-gray-500">Code</span>
+                            <span class="text-gray-700">Code</span>
                             <span class="font-medium text-right">{{ $animal->code }}</span>
 
-                            <span class="text-gray-500">Category</span>
+                            <span class="text-gray-700">Category</span>
                             <span class="font-medium text-right">{{ $animal->category->name ?? '-' }}</span>
 
-                            <span class="text-gray-500">Usia</span>
+                            <span class="text-gray-700">Usia</span>
                             <span class="font-medium text-right">{{ $animal->age }}</span>
 
-                            <span class="text-gray-500">Gender</span>
+                            <span class="text-gray-700">Gender</span>
                             <span class="font-medium text-right">{{ ucfirst($animal->gender) }}</span>
 
-                            <span class="text-gray-500">Created At</span>
+                            <span class="text-gray-700">Created At</span>
                             <span class="font-medium text-right">
                                 {{ $animal->created_at->format('d M Y') }}
                             </span>
 
-                            <span class="text-gray-500">Posted By</span>
-                            <span class="font-medium text-right">
-                                {{ $animal->createdBy ? $animal->createdBy->name : 'Admin' }}
+                            <span class="text-gray-700">Posted By</span>
+
+                            <span class="text-right">
+                                @if ($animal->createdBy)
+                                    <a href="{{ route('users.show', $animal->createdBy->slug) }}"
+                                        class="inline-flex items-center px-3 py-1 text-xs font-medium
+            bg-gray-100 text-gray-700 rounded-full
+            hover:bg-gray-200 transition">
+
+                                        {{ $animal->createdBy->name }}
+
+                                    </a>
+                                @else
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 text-xs font-medium
+            bg-gray-100 text-gray-700 rounded-full">
+                                        Admin
+                                    </span>
+                                @endif
                             </span>
                         </div>
 
