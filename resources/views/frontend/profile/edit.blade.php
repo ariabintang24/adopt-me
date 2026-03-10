@@ -18,28 +18,28 @@
                 <div class="grid md:grid-cols-3 gap-10">
 
                     {{-- AVATAR --}}
-                    <div class="text-center">
+                    <div class="flex flex-col items-center">
 
-                        <div class="relative inline-block">
+                        <div class="relative">
 
                             @if ($user->avatar)
                                 <img id="avatarPreview" src="{{ asset('storage/' . $user->avatar) }}"
-                                    class="w-32 h-32 rounded-full object-cover mx-auto">
+                                    class="w-32 h-32 rounded-full object-cover">
                             @else
                                 <div id="avatarPreview"
-                                    class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-2xl font-semibold mx-auto">
+                                    class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-2xl font-semibold">
                                     {{ strtoupper(substr($user->name, 0, 2)) }}
                                 </div>
                             @endif
 
                         </div>
 
-                        <label class="mt-4 inline-block text-sm text-indigo-600 cursor-pointer hover:underline">
+                        <label class="mt-4 text-sm text-indigo-600 cursor-pointer hover:underline">
                             Change Photo
                             <input type="file" name="avatar" class="hidden" onchange="previewAvatar(event)">
                         </label>
 
-                        <p class="text-xs text-gray-400 mt-2">
+                        <p class="text-xs text-gray-400 mt-1">
                             JPG, PNG up to 2MB
                         </p>
 
@@ -72,7 +72,6 @@
                             <textarea name="address" rows="3"
                                 class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md text-gray-600 focus:ring-2 focus:ring-indigo-500">{{ old('address', $user->address) }}</textarea>
                         </div>
-
 
                         <div class="flex gap-4 pt-4">
 
