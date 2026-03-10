@@ -4,9 +4,16 @@
     <section class="bg-gray-50 py-12">
         <div class="max-w-6xl mx-auto px-6">
 
+            @include('frontend.components.profile-header', [
+                'title' => 'Adoption Request',
+                'subtitle' => 'Submit your adoption request',
+                'back' => route('animals.show', $animal->slug),
+            ])
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
                 {{-- LEFT PREVIEW --}}
+
                 @include('frontend.components.animal-preview', ['animal' => $animal])
 
                 {{-- RIGHT FORM --}}

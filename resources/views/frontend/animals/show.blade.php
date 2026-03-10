@@ -7,15 +7,13 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
 
             {{-- TAGLINE --}}
-            <div class="text-center lg:text-left mb-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-gray-900">
-                    Find Your New Best Friend Today
-                </h2>
-                <p class="text-gray-500 mt-2">
-                    Give them a loving home and they’ll give you unconditional love.
-                </p>
+            <div class="mb-8">
+                @include('frontend.components.profile-header', [
+                    'title' => 'Animal Details',
+                    'subtitle' => 'Find Your New Best Friend Today',
+                    'back' => route('animals.index'),
+                ])
             </div>
-
 
             {{-- MAIN WRAPPER CARD --}}
             <div class="bg-white rounded-3xl shadow-md overflow-hidden">
@@ -65,12 +63,11 @@
                             {{ $animal->name }}
                         </h1>
 
-                        {{-- ERROR MESSAGE
                         @if (session('error'))
                             <div class="bg-red-100 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm">
                                 {{ session('error') }}
                             </div>
-                        @endif --}}
+                        @endif
 
                         {{-- DESCRIPTION --}}
                         <div class="text-gray-700 text-sm md:text-base leading-relaxed mb-6">
@@ -123,14 +120,14 @@
 
 
                         {{-- ADOPT BUTTON --}}
-                        @if (auth()->check())
-                            <a href="{{ route('adoption.create', $animal->id) }}"
-                                class="mt-auto bg-indigo-600 text-white px-6 py-3 rounded-xl
+
+                        <a href="{{ route('adoption.create', $animal->id) }}"
+                            class="mt-auto bg-indigo-600 text-white px-6 py-3 rounded-xl
                text-sm font-semibold text-center
                hover:bg-indigo-700 transition shadow-md">
-                                Adopt Me 🐾
-                            </a>
-                        @endif
+                            Adopt Me 🐾
+                        </a>
+
 
                     </div>
 
