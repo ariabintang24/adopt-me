@@ -107,18 +107,13 @@
 
 
                                         <!-- LOGOUT -->
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
+                                        <button @click="showLogout = true; showMenu = false"
+                                            class="w-full flex items-center text-gray-600 gap-3 px-4 py-2.5 text-sm transition">
 
-                                            <button
-                                                class="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-red-50 transition">
+                                            <img src="{{ asset('images/icons/logout.png') }}" class="w-4 h-4 opacity-80">
 
-                                                <img src="{{ asset('images/icons/logout.png') }}"
-                                                    class="w-4 h-4 opacity-80">
-
-                                                Logout
-                                            </button>
-                                        </form>
+                                            Logout
+                                        </button>
 
                                     </div>
 
@@ -150,7 +145,7 @@
                             </div>
 
 
-                            <div class="space-y-4 text-sm">
+                            <div class="space-y-0 text-sm">
 
                                 <div class="bg-white rounded-xl p-3">
                                     <p class="text-gray-400 text-xs">Email</p>
@@ -469,7 +464,7 @@
         <div x-show="showLogout" x-transition
             class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
 
-            <div @click.outside="show = false" class="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-6">
+            <div @click.outside="showLogout = false" class="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-6">
 
                 <div class="text-center">
 
