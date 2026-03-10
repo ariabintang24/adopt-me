@@ -3,15 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
-use Filament\Panel;
 
 
 class User extends Authenticatable
@@ -31,6 +30,7 @@ class User extends Authenticatable
         'phone',
         'address',
         'avatar',
+        'slug',
     ];
 
     /**
@@ -58,6 +58,29 @@ class User extends Authenticatable
 
     protected $guard_name = 'web';
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+
+            $baseSlug = Str::slug($user->name);
+            $slug = $baseSlug;
+
+            $count = 1;
+
+            while (User::where('slug', $slug)->exists()) {
+                $slug = $baseSlug . '-' . rand(10, 999);
+                $count++;
+            }
+
+            $user->slug = $slug;
+        });
+    }
+
+
+
+    // Public
 
     public function canAccessPanel(Panel $panel): bool
     {
@@ -105,6 +128,11 @@ class User extends Authenticatable
 
     public function animals()
     {
-        return $this->hasMany(UserAnimal::class);
+        return $this->hasMany(Animal::class, 'created_by');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

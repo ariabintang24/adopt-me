@@ -6,9 +6,13 @@ use App\Http\Controllers\Frontend\AnimalController;
 use App\Http\Controllers\Frontend\FavoriteController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/users/{user:slug}', [UserController::class, 'show'])
+    ->name('users.show');
 
 Route::post('/contact', [ContactController::class, 'send'])
     ->name('contact.send');
