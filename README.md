@@ -98,3 +98,16 @@ Users can manage animals they have posted, including editing and deleting their 
 
 <img src="./previews/my_animal_posts.png" width="300"/>
 
+---
+
+### ⚙️ Account Settings
+Users can update their personal information such as name, phone number, address, and profile picture through an intuitive profile settings page.
+
+<img src="./previews/edit_profile.png" width="300"/>
+
+---
+
+### 🔑 Change Password
+Users can securely update their password by providing their current password and confirming the new one, with basic password strength indication.
+
+<img src="./previews/change_password.png" width="300"/>
