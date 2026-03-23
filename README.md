@@ -60,12 +60,7 @@ Provides detailed information about each animal, including age, category, status
 Users can create an account and log in to access features such as adoption requests and favorites.
 
 <div align="center">
-  <div style="display:inline-block; width:260px;">
-    <img src="./previews/login_adoptme.png" width="100%"/>
-  </div>
-  <div style="display:inline-block; width:260px;">
-    <img src="./previews/register_adoptme.png" width="100%"/>
-  </div>
+    <img src="./previews/login_register.png" width="250"/>
 </div>
 
 ---
