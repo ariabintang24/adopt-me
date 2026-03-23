@@ -1,4 +1,4 @@
-<section class="bg-gray-50">
+<section class="bg-white">
     <div class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
 
         <div>
