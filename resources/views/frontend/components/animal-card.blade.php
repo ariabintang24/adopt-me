@@ -1,6 +1,6 @@
 <div x-data="{
     isLoggedIn: {{ auth()->check() ? 'true' : 'false' }},
-    isFavorite: {{ auth()->check() ? (auth()->user()->favorites->contains($animal->id) ? 'true' : 'false') : 'false' }},
+    isFavorite: {{ auth()->check() && $animal->is_favorite ? 'true' : 'false' }},
     loading: false,
 
     async toggle() {
