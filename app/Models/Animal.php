@@ -74,4 +74,15 @@ class Animal extends Model
             default => '-',
         };
     }
+
+    public function isFavoritedBy($user)
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return $this->favorites()
+            ->where('user_id', $user->id)
+            ->exists();
+    }
 }
