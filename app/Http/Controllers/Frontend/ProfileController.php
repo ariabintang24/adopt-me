@@ -41,6 +41,11 @@ class ProfileController extends Controller
 
         $favorites = $user->favorites()
             ->with(['category', 'images'])
+            ->withCount([
+                'favoritedBy as is_favorite' => function ($query) {
+                    $query->where('user_id', auth()->id());
+                }
+            ])
             ->latest()
             ->take(3) //menampilkan preview
             ->get();
@@ -80,6 +85,11 @@ class ProfileController extends Controller
 
         $favorites = $user->favorites()
             ->with(['images'])
+            ->withCount([
+                'favoritedBy as is_favorite' => function ($query) {
+                    $query->where('user_id', auth()->id());
+                }
+            ])
             ->latest()
             ->paginate(6);
 

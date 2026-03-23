@@ -23,7 +23,7 @@ class AnimalController extends Controller
             ->withCount([
                 'favoritedBy as is_favorite' => function ($query) {
                     if (auth()->check()) {
-                        $query->where('user_id', auth()->id());
+                        $query->where('user_id', auth()->id() ?? 0);
                     }
                 }
             ])
