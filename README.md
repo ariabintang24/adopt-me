@@ -22,79 +22,84 @@ This project is built using:
 ## 🚀 Features
 
 ### 🏠 Landing Page
-Halaman utama yang memperkenalkan platform dan mengarahkan user untuk mulai menjelajah atau memposting hewan.
+The main entry point of the platform, introducing the application and guiding users to explore available animals or post a new one.
 
-<img src="./previews/landing-page.png" width="300"/>
+<img src="./previews/landing_page.png" width="300"/>
 
 ---
 
 ### 📂 Browse by Category
-User dapat memilih kategori hewan seperti kucing, anjing, burung, dan lainnya untuk mempermudah pencarian.
+Users can browse animals by category such as cats, dogs, birds, and more to quickly find what they are looking for.
 
 <img src="./previews/browse_category.png" width="300"/>
 
 ---
 
 ### 🐾 Available Animals
-Menampilkan daftar hewan yang tersedia dengan fitur filter, sorting, dan pencarian.
+Displays a list of animals available for adoption, equipped with filtering, sorting, and search functionality.
 
 <img src="./previews/available_animals.png" width="300"/>
 
 ---
 
+### 🎛 Filter System
+Provides filtering options based on category, age, and gender to help users find animals more efficiently.
+
+<img src="./previews/filter_animal.png" width="300"/>
+
+---
+
 ### 🔎 Animal Detail
-Menampilkan informasi lengkap hewan termasuk usia, kategori, status, dan pemilik.
+Provides detailed information about each animal, including age, category, status, and the owner who posted it.
 
 <img src="./previews/adoption_details.png" width="300"/>
 
 ---
 
 ### 🔐 Authentication (Login & Register)
-User dapat membuat akun dan login untuk mengakses fitur adopsi dan favorit.
+Users can create an account and log in to access features such as adoption requests and favorites.
 
 <div align="center">
-  <img src="./previews/login_adoptme.png" width="250"/>
-  <img src="./previews/register_adoptme.png" width="250"/>
+  <div style="display:inline-block; width:260px;">
+    <img src="./previews/login_adoptme.png" width="100%"/>
+  </div>
+  <div style="display:inline-block; width:260px;">
+    <img src="./previews/register_adoptme.png" width="100%"/>
+  </div>
 </div>
 
 ---
 
 ### 📝 Adoption Request
-User dapat mengisi form adopsi dengan beberapa pertanyaan untuk memastikan kelayakan adopsi.
+Users can submit an adoption request by filling out a structured form to ensure responsible adoption.
 
 <img src="./previews/adoption_request_form.png" width="300"/>
 
 ---
 
 ### 👤 User Profile
-Menampilkan informasi user serta status request adopsi (pending, approved, rejected).
+Displays user information along with adoption request statuses such as pending, approved, and rejected.
 
 <img src="./previews/profile.png" width="300"/>
 
 ---
 
 ### ❤️ Favorites
-User dapat menyimpan hewan favorit untuk dilihat kembali nanti.
+Allows users to save animals they are interested in and access them later from their profile.
 
 <img src="./previews/my_favorites.png" width="300"/>
 
 ---
 
 ### 📤 Post Animal
-User dapat memposting hewan untuk diadopsi dengan mengisi detail lengkap.
+Users can post animals for adoption by providing complete details and information.
 
 <img src="./previews/post_animal.png" width="300"/>
 
 ---
 
 ### 📋 My Animal Posts
-User dapat mengelola hewan yang telah dipost (edit & delete).
+Users can manage animals they have posted, including editing and deleting their listings.
 
 <img src="./previews/my_animal_posts.png" width="300"/>
 
----
-
-### 🎛 Filter System
-Fitur filter berdasarkan kategori, usia, dan gender untuk mempercepat pencarian.
-
-<img src="./previews/filter_animal.png" width="300"/>
