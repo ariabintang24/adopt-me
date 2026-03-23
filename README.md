@@ -1,59 +1,100 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## 🐾 About AdoptMe
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+AdoptMe is a web-based platform designed to connect people with animals in need of a new home.  
+Users can explore available animals, submit adoption requests, and manage their own adoption activities in a simple and intuitive way.
 
-## About Laravel
+This project focuses on building a complete adoption flow — from browsing animals to submitting requests — while maintaining a clean and user-friendly interface.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠 Tech Stack
 
-## Learning Laravel
+This project is built using:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- **Laravel** — Backend framework for handling API, authentication, and business logic  
+- **Filament** — Admin panel for managing data efficiently  
+- **Laravel Breeze** — Lightweight authentication system (login & register)  
+- **Spatie (Laravel Permission / Media Library)** — Role & permission management and file handling  
+- **Tailwind CSS** — Utility-first CSS framework for modern UI design  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🚀 Features
 
-### Premium Partners
+### 🏠 Landing Page
+Halaman utama yang memperkenalkan platform dan mengarahkan user untuk mulai menjelajah atau memposting hewan.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+<img src="./previews/landing-page.png" width="300"/>
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 📂 Browse by Category
+User dapat memilih kategori hewan seperti kucing, anjing, burung, dan lainnya untuk mempermudah pencarian.
 
-## Code of Conduct
+<img src="./previews/browse_category.png" width="300"/>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+### 🐾 Available Animals
+Menampilkan daftar hewan yang tersedia dengan fitur filter, sorting, dan pencarian.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+<img src="./previews/available_animals.png" width="300"/>
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 🔎 Animal Detail
+Menampilkan informasi lengkap hewan termasuk usia, kategori, status, dan pemilik.
+
+<img src="./previews/adoption_details.png" width="300"/>
+
+---
+
+### 🔐 Authentication (Login & Register)
+User dapat membuat akun dan login untuk mengakses fitur adopsi dan favorit.
+
+<div align="center">
+  <img src="./previews/login_adoptme.png" width="250"/>
+  <img src="./previews/register_adoptme.png" width="250"/>
+</div>
+
+---
+
+### 📝 Adoption Request
+User dapat mengisi form adopsi dengan beberapa pertanyaan untuk memastikan kelayakan adopsi.
+
+<img src="./previews/adoption_request_form.png" width="300"/>
+
+---
+
+### 👤 User Profile
+Menampilkan informasi user serta status request adopsi (pending, approved, rejected).
+
+<img src="./previews/profile.png" width="300"/>
+
+---
+
+### ❤️ Favorites
+User dapat menyimpan hewan favorit untuk dilihat kembali nanti.
+
+<img src="./previews/my_favorites.png" width="300"/>
+
+---
+
+### 📤 Post Animal
+User dapat memposting hewan untuk diadopsi dengan mengisi detail lengkap.
+
+<img src="./previews/post_animal.png" width="300"/>
+
+---
+
+### 📋 My Animal Posts
+User dapat mengelola hewan yang telah dipost (edit & delete).
+
+<img src="./previews/my_animal_posts.png" width="300"/>
+
+---
+
+### 🎛 Filter System
+Fitur filter berdasarkan kategori, usia, dan gender untuk mempercepat pencarian.
+
+<img src="./previews/filter_animal.png" width="300"/>
